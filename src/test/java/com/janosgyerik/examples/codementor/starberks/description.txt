@@ -1,34 +1,37 @@
-University of Newcastle
-School of Electrical Engineering and Computer Science
-SENG1110/6110 Programming Assignment 1 – Semester 1, 2016
-Due: By electronic submission (Blackboard) by 11:59pm on Friday April 22
 Starberk’s coffee replenishment system
+
 Introduction
+
 The objective of this assignment is the implementation of an object oriented program using Java.
+
 Note: Assignment 2 will be an extension of assignment 1.
+
 Problem Description
+
 Starberk's coffee has asked you to create a system to enable them manage the replenishment of different products
 they sell in one specific store. Each product has the following information: name, demand rate, setup cost, unit cost,
 inventory cost and selling price. Demand rate is a fixed demand per week. The setup cost is a fixed cost that
+
 Starberk's coffee needs to pay every time they make an order, regardless of the quantity and the unit cost is the price
 per unit. The inventory cost is the cost for each product unit in the inventory per week.
 The dilemma is if Starberk's Coffee places a large order to cover the whole month, they will spend a lot of money in
 inventory. If they decide to make an order every week they will spend a lot in setup, since every time they ask an
 order they need to pay a setup cost.
-There is a method named EOQ (Economic Order Quantity) which calculates the optimal order quantity, if you know
-the following information:
-Demand rate
-Inventory cost/unit
-Setup cost
-The EOQ method calculates the optimal order quantity that would minimize total variable costs, by using the formula
-below
-Q = √
-2𝑠𝑑
-ℎ
-Where s = setup cost
-d = demand/week
-h= inventory cost/unit/week
+
+There is a method named EOQ (Economic Order Quantity) which calculates the optimal order quantity,
+if you know the following information:
+
+- Demand rate
+- Inventory cost/unit
+- Setup cost
+
+The EOQ method calculates the optimal order quantity that would minimize total variable costs,
+by using the formula below:
+
+    ...
+
 An example:
+
 Suppose that you know that demand rate for coffee is 45/week, h = 0.60 (inventory cost per unit per week) and s =
 132 (setup cost). With these values, you can calculate the value of Q which will be 140.71. Suppose that you can
 just order integer values, so rounding 140.71 we will have Q=141. Now, you can find the replenishment strategy for
@@ -37,23 +40,27 @@ units, then it will have 96 units in the inventory. In the second week the deman
 the inventory from week 1. So, the second week will finish with 51 units. Then week 3 will finish with 6 units in the
 inventory. By week 4, there is not enough units in the inventory, so we need to make a new order, and so on. So, the
 replenishment strategy for next 6 weeks will be
-Week Quantity Order Demand Inventory
-1 141 45 96
-2 0 45 51
-3 0 45 6
-4 141 45 102
-5 0 45 57
-6 0 45 12
+
+    Week Quantity Order Demand Inventory
+    1 141 45 96
+    2 0 45 51
+    3 0 45 6
+    4 141 45 102
+    5 0 45 57
+    6 0 45 12
+
 Notice that the inventory finishes with 12 units. This is not necessary; it is better the inventory finishes with 0 units.
 So, we can do some arrangements. Just change the last order from 141 to (141-12). So the best replenishment
 strategy for next 6 weeks will be
-Week Quantity Order Demand Inventory
-1 141 45 96
-2 0 45 51
-3 0 45 6
-4 129 45 90
-5 0 45 45
-6 0 45 0
+
+    Week Quantity Order Demand Inventory
+    1 141 45 96
+    2 0 45 51
+    3 0 45 6
+    4 129 45 90
+    5 0 45 45
+    6 0 45 0
+
 Now, let’s calculate the total cost and the total profit. Suppose the unit cost is 1 and the selling price is 3. The total
 cost will be
 Purchase = (132+132) + (141+129)*1 = 264+270 = 534
