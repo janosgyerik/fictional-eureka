@@ -35,7 +35,7 @@ public class StarberksInterface {
         System.out.println("4. Exit Program");
     }
 
-    protected String readValidName(Scanner scanner) {
+    String readValidName(Scanner scanner) {
         while (true) {
             System.out.println("Enter the name of the product you would like to add :");
             String name = scanner.nextLine();
@@ -46,7 +46,7 @@ public class StarberksInterface {
         }
     }
 
-    protected boolean isValidName(String name) {
+    boolean isValidName(String name) {
         int length = name.length();
         return MIN_NAME_LENGTH <= length && length <= MAX_NAME_LENGTH;
     }
@@ -182,7 +182,6 @@ public class StarberksInterface {
     }
 
     public void choice4() {
-
         if (numberOfProducts == 0) {
             System.out.println("Thank you and have a nice day!");
             System.exit(0);
