@@ -53,14 +53,15 @@ public class Store {
     }
 
     public void showReplenishmentStrategy(Product product, int week) {
-        int quantityOrder =
-                (int) Math.round(Math.sqrt(2 * product.getSetupCost() * product.getDemandRate() / product.getInvtCost()));
-
+        int q = (int) Math.round(Math.sqrt(2 * product.getSetupCost() * product.getDemandRate() / product.getInvtCost()));
+        int quantityOrder = q;
         int inventory = quantityOrder;
+
         printHeader();
+
         for (int i = 1; i <= week; i++) {
             if (inventory < product.getDemandRate()) {
-                quantityOrder = calculateBestReplenishmentQuantity(product.getDemandRate(), inventory, week - i + 1);
+                quantityOrder = calculateBestReplenishmentQuantity(q, product.getDemandRate(), inventory, week - i + 1);
                 inventory += quantityOrder;
             }
             inventory -= product.getDemandRate();
@@ -75,11 +76,8 @@ public class Store {
         }
     }
 
-    int calculateBestReplenishmentQuantity(int demandRate, int inventory, int remainingWeeks) {
-        // TODO figure out formula to return 129 for product with demand rate 45, inventory 6, remaining weeks 3
-        // TODO figure out formula to return  84 for product with demand rate 45, inventory 6, remaining weeks 2
-        // TODO figure out formula for larger remainingWeeks
-        return remainingWeeks * demandRate - inventory;
+    int calculateBestReplenishmentQuantity(int q, int demandRate, int inventory, int remainingWeeks) {
+        return Math.min(q, remainingWeeks * demandRate) - inventory;
     }
 
     private void printColumns(int week, int quantityOrder, int demandRate, int inventory) {
