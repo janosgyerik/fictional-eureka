@@ -1,8 +1,5 @@
 package com.janosgyerik.examples.codementor.starberks;
 
-import com.janosgyerik.examples.codementor.starberks.Product;
-import org.junit.Test;
-
 import java.util.Scanner;
 
 /**
@@ -35,18 +32,18 @@ public class StarberksInterface {
         System.out.println("4. Exit Program");
     }
 
-    String readValidName(Scanner scanner) {
+    String readValidProductName(Scanner scanner) {
         while (true) {
             System.out.println("Enter the name of the product you would like to add :");
             String name = scanner.nextLine();
-            if (isValidName(name)) {
+            if (isValidProductName(name)) {
                 return name;
             }
             System.out.println("Invalid name: " + name);
         }
     }
 
-    boolean isValidName(String name) {
+    boolean isValidProductName(String name) {
         int length = name.length();
         return MIN_NAME_LENGTH <= length && length <= MAX_NAME_LENGTH;
     }
@@ -57,7 +54,7 @@ public class StarberksInterface {
         System.out.println("Enter the name of the product you would like to add :");
         String name = keyboard.nextLine();
         // checking if name entered by user is => 3 and <= 10 characters long and if
-        if (isValidName(name)) {
+        if (isValidProductName(name)) {
             if (productExists(name) == false) {
                 if (numberOfProducts == 0) {
                     Product product1 = new Product();
