@@ -16,6 +16,8 @@ public class Store {
     private Product product2;
     private Product product3;
 
+    private int numberOfProducts = 0;
+
     private void EOQ(int setupCost, int demandPerWeek, double inventoryCostPerUnitPerWeek) {
         double temp = (2 * setupCost * demandPerWeek) / inventoryCostPerUnitPerWeek;
         quantity = Math.sqrt(temp);
@@ -26,13 +28,66 @@ public class Store {
 
     }
 
-    public void addProduct(Product product) {
-
+    public boolean addProduct(Product product) {
+        if (product1 == null) {
+            product1 = product;
+            numberOfProducts++;
+            return true;
+        }
+        if (product2 == null) {
+            product2 = product;
+            numberOfProducts++;
+            return true;
+        }
+        if (product3 == null) {
+            product3 = product;
+            numberOfProducts++;
+            return true;
+        }
+        return false;
     }
 
-    public void showReplenishmentStrategy(int week) {
+    public void removeOneProduct() {
+        product1 = null;
+        numberOfProducts--;
+    }
 
+    public void showReplenishmentStrategy(Product product, int week) {
+        int quantityOrder =
+                (int) Math.round(Math.sqrt(2 * product.getSetupCost() * product.getDemandRate() / product.getInvtCost()));
 
+        int inventory = quantityOrder;
+        printHeader();
+        for (int i = 1; i <= week; i++) {
+            if (inventory < product.getDemandRate()) {
+                quantityOrder = calculateBestReplenishmentQuantity(product.getDemandRate(), inventory, week - i + 1);
+                inventory += quantityOrder;
+            }
+            inventory -= product.getDemandRate();
+
+            // 1, 141, 45, 141 - 45 = 96
+            // 2,   0, 45, 96 - 45 = 51
+            // 3,   0, 45, 51 - 45 = 6
+            // 4, 129, 45, 129 + 6 - 45 = 90
+            printColumns(i, quantityOrder, product.getDemandRate(), inventory);
+
+            quantityOrder = 0;
+        }
+    }
+
+    int calculateBestReplenishmentQuantity(int demandRate, int inventory, int remainingWeeks) {
+        // TODO figure out formula to return 129 for product with demand rate 45, inventory 6, remaining weeks 3
+        // TODO figure out formula to return  84 for product with demand rate 45, inventory 6, remaining weeks 2
+        // TODO figure out formula for larger remainingWeeks
+        return remainingWeeks * demandRate - inventory;
+    }
+
+    private void printColumns(int week, int quantityOrder, int demandRate, int inventory) {
+        // TODO
+    }
+
+    private void printHeader() {
+        // TODO
     }
 
     public void showBestReplenishmentStrategy() {
@@ -139,5 +194,20 @@ public class Store {
     }
 
 
+    public boolean isEmpty() {
+        return numberOfProducts == 0;
+    }
+
+    public boolean containsProduct(String name) {
+        return false;
+    }
+
+    public Product getProduct(String name) {
+        if (product1 != null && product1.getName().equalsIgnoreCase(name)) {
+            return product1;
+        }
+        // TODO same for product2 and 3
+        return null;
+    }
 }
 

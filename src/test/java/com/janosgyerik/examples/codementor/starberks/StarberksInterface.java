@@ -7,17 +7,18 @@ import java.util.Scanner;
  */
 public class StarberksInterface {
 
-    private static final Scanner keyboard = new Scanner(System.in);
-    private static final Store Store = new Store();
     private static final int MIN_NAME_LENGTH = 3;
     private static final int MAX_NAME_LENGTH = 10;
+
+    private static final Scanner keyboard = new Scanner(System.in);
+    private static final Store store = new Store();
 
     //after adding a product, numberOfProducts + 1. when this var reaches 3,
     // inventory is full and user can't add any more products
     int numberOfProducts = 0;
 
     // TODO delete
-    Product product;
+    private Product product;
 
     private static void showHeader() {
         System.out.println("--------------------------------------");
@@ -32,7 +33,10 @@ public class StarberksInterface {
         System.out.println("4. Exit Program");
     }
 
+    // valid = correct format and unique
     String readValidProductName(Scanner scanner) {
+        // TODO validate unique
+
         while (true) {
             System.out.println("Enter the name of the product you would like to add :");
             String name = scanner.nextLine();
@@ -49,29 +53,25 @@ public class StarberksInterface {
     }
 
     public void inputProduct() {
-        //get the information from the user
+        String name = readValidProductName(keyboard);
 
-        System.out.println("Enter the name of the product you would like to add :");
-        String name = keyboard.nextLine();
-        // checking if name entered by user is => 3 and <= 10 characters long and if
-        if (isValidProductName(name)) {
-            if (productExists(name) == false) {
-                if (numberOfProducts == 0) {
-                    Product product1 = new Product();
-                    name = name.toLowerCase();
-                    product1.setName(name);
-                    System.out.println("Name of product is : " + product1.getName());
-                } else if (numberOfProducts == 1) {
-                    Product product2 = new Product();
-                    name = name.toLowerCase();
-                    product2.setName(name);
-                    System.out.println("Name of product is : " + product2.getName());
-                } else {
-                    Product product3 = new Product();
-                    name = name.toLowerCase();
-                    product3.setName(name);
-                    System.out.println("Name of product is : " + product3.getName());
-                }
+
+        if (productExists(name) == false) {
+            if (numberOfProducts == 0) {
+                Product product1 = new Product();
+                name = name.toLowerCase();
+                product1.setName(name);
+                System.out.println("Name of product is : " + product1.getName());
+            } else if (numberOfProducts == 1) {
+                Product product2 = new Product();
+                name = name.toLowerCase();
+                product2.setName(name);
+                System.out.println("Name of product is : " + product2.getName());
+            } else {
+                Product product3 = new Product();
+                name = name.toLowerCase();
+                product3.setName(name);
+                System.out.println("Name of product is : " + product3.getName());
             }
         }
 
@@ -80,16 +80,13 @@ public class StarberksInterface {
         int demand = keyboard.nextInt();
         // checking if number entered by user is positive
         if (numberIsPositive(demand) == true) {
-            product.setDemandRate(demand);
             System.out.println("Demand per week is : " + demand);
         }
-
 
         System.out.println("Enter the setup cost :");
         double setup = keyboard.nextDouble();
         // checking if double enter by user is positive
         if (doubleIsPositive(setup) == true) {
-            product.setSetupCost(setup);
             System.out.println("Setup cost is : " + setup);
         }
 
@@ -97,7 +94,6 @@ public class StarberksInterface {
         System.out.println("Enter unit cost :");
         double unit = keyboard.nextDouble();
         if (doubleIsPositive(unit) == true) {
-            product.setUnitCost(unit);
             System.out.println("Unit cost is : " + unit);
         }
 
@@ -105,7 +101,6 @@ public class StarberksInterface {
         System.out.println("Enter inventory cost :");
         double inv = keyboard.nextDouble();
         if (doubleIsPositive(inv) == true) {
-            product.setInvtCost(inv);
             System.out.println("Inventory cost is : " + inv);
         }
 
@@ -113,17 +108,21 @@ public class StarberksInterface {
         System.out.println("Enter selling price :");
         double price = keyboard.nextDouble();
         if (doubleIsPositive(price) == true) {
-            product.setPrice(price);
             System.out.println("Selling price is : " + price);
         }
 
+        Product product = new Product(name, demand, setup, unit, inv, price);
 
-        // once all values typed in are ok, product count will increase by 1
-        numberOfProducts++;
+        if (!store.addProduct(product)) {
+            System.out.println("Store is full!");
+            // TODO ask the user if ok to delete
+            // if yes -> delete
+            // ...
+        }
+
         // product name will be added to String inventory
         product.Inventory += name;
         showMenu();
-
     }
 
     public void choice2() {
@@ -149,33 +148,24 @@ public class StarberksInterface {
 
     }
 
-    public void choice3() {
+    public void printReplenishmentStrategy() {
 
         // if there is no product data, noProductData method will be called
-        if (product.numOfProducts == 0) {
+        if (store.isEmpty()) {
             noProductData();
         } else {
-            System.out.println("Enter the name of the product:");
-            String text = keyboard.nextLine();
-            checkForErrors(text);
-            if (checkForErrors(text) == false) {
-                String productName = text.toLowerCase();
-                if (productExists(productName) == false) {
-                    // print error message and ask for input again
-                    noProductData();
-                }
-            } else {
+            String name = readValidProductName(keyboard);
+            Product product = store.getProduct(name);
+            if (product != null) {
                 // product exists
                 System.out.println("Enter number of weeks:");
                 int week = keyboard.nextInt();
                 // print product replenishment strategy
-                Store.showReplenishmentStrategy(week);
+                store.showReplenishmentStrategy(product, week);
                 // program will return to main menu
                 run();
             }
-
         }
-
     }
 
     public void choice4() {
@@ -316,7 +306,7 @@ public class StarberksInterface {
                     choice2();
                     break;
                 case (3):
-                    choice3();
+                    printReplenishmentStrategy();
                     break;
                 case (4):
                     choice4();
