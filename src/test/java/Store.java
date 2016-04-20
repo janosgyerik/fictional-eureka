@@ -14,8 +14,6 @@ public class Store {
     private Product product2;
     private Product product3;
 
-    private int numberOfProducts = 0;
-
     private void EOQ(int setupCost, int demandPerWeek, double inventoryCostPerUnitPerWeek) {
         double temp = (2 * setupCost * demandPerWeek) / inventoryCostPerUnitPerWeek;
         quantity = Math.sqrt(temp);
@@ -29,17 +27,14 @@ public class Store {
     public boolean addProduct(Product product) {
         if (product1 == null) {
             product1 = product;
-            numberOfProducts++;
             return true;
         }
         if (product2 == null) {
             product2 = product;
-            numberOfProducts++;
             return true;
         }
         if (product3 == null) {
             product3 = product;
-            numberOfProducts++;
             return true;
         }
         return false;
@@ -47,7 +42,6 @@ public class Store {
 
     public void removeOneProduct() {
         product1 = null;
-        numberOfProducts--;
     }
 
     public void showReplenishmentStrategy(Product product, int week) {
@@ -151,7 +145,11 @@ public class Store {
 
 
     public boolean isEmpty() {
-        return numberOfProducts == 0;
+        return product1 == null && product2 == null && product3 == null;
+    }
+
+    public boolean isFull() {
+        return product1 != null && product2 != null && product3 != null;
     }
 
     public boolean containsProduct(String name) {
