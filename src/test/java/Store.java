@@ -51,7 +51,8 @@ public class Store {
     }
 
     public void showReplenishmentStrategy(Product product, int week) {
-        int q = (int) Math.round(Math.sqrt(2 * product.getSetupCost() * product.getDemandRate() / product.getInvtCost()));
+        int q = (int) Math.round(
+            Math.sqrt(2 * product.getSetupCost() * product.getDemandRate() / product.getInvtCost()));
         int quantityOrder = q;
         int inventory = quantityOrder;
 
@@ -94,43 +95,42 @@ public class Store {
 
 
     private void calculateProfit() {
-    	double cost1 = 0;
-    	double cost2 = 0;
-    	double cost3 = 0;
-    	
+        double cost1 = 0;
+        double cost2 = 0;
+        double cost3 = 0;
+
         double purchase = (setupCost * timesSetup) + quantity;
         double profit1 = product1.getDemandRate() * product1.demandRate * product1.getPrice() - cost1;
         double profit2 = product2.getDemandRate() * product2.demandRate * product2.getPrice() - cost2;
         double profit3 = product3.getDemandRate() * product3.demandRate * product3.getPrice() - cost3;
-        
-        if(profit1 > profit2 && profit1 > profit3) {
-        	String name = product1.getName();
-        	double biggestProfit = profit1;
-        		if(profit2 > profit1 && profit2 > profit3){
-        			name = product2.getName();
-        			biggestProfit = profit2;
-        	} else {
-        			name = product3.getName();
-        			biggestProfit = profit3;
-        	}
-        	
-        		System.out.println("Product : "   + name);
-        		System.out.println("Profit : $ " + biggestProfit);
-        } 
+
+        if (profit1 > profit2 && profit1 > profit3) {
+            String name = product1.getName();
+            double biggestProfit = profit1;
+            if (profit2 > profit1 && profit2 > profit3) {
+                name = product2.getName();
+                biggestProfit = profit2;
+            } else {
+                name = product3.getName();
+                biggestProfit = profit3;
+            }
+
+            System.out.println("Product : " + name);
+            System.out.println("Profit : $ " + biggestProfit);
+        }
     }
-    
- 
+
+
     // this method shows the demand rate, setup cost, unit cost, inventory cost and selling price of whatever
     // product is inserted into the parameter
     public void showProductDetails(Product p) {
-    	System.out.println(p.getName());
-    	System.out.println(p.getDemandRate());
-    	System.out.println(p.getSetupCost());
-    	System.out.println(p.getUnitCost());
-    	System.out.println(p.getInvtCost());
-    	System.out.println(p.getPrice());
+        System.out.println(p.getName());
+        System.out.println(p.getDemandRate());
+        System.out.println(p.getSetupCost());
+        System.out.println(p.getUnitCost());
+        System.out.println(p.getInvtCost());
+        System.out.println(p.getPrice());
     }
-
 
 
     private void manageResponse() {
@@ -159,13 +159,16 @@ public class Store {
     }
 
     public Product getProduct(String name) {
-        if (product1 != null && product1.getName().equalsIgnoreCase(name)) {
+        if (product1 != null && product1.getName()
+            .equalsIgnoreCase(name)) {
             return product1;
         }
-        if (product2 != null && product2.getName().equalsIgnoreCase(name)) {
+        if (product2 != null && product2.getName()
+            .equalsIgnoreCase(name)) {
             return product2;
         }
-        if (product3 != null && product3.getName().equalsIgnoreCase(name)) {
+        if (product3 != null && product3.getName()
+            .equalsIgnoreCase(name)) {
             return product3;
         }
         return null;
