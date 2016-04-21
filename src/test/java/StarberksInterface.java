@@ -150,6 +150,7 @@ public class StarberksInterface {
         showHeader();
 
         Scanner scanner = new Scanner(System.in);
+//        scanner = new Scanner("1\nco\ncoffee\n4 5 6 7 8\n2\nnosuch\ncoffee\n");
         while (true) {
             showMenu();
             System.out.println("Please enter an option between 1 to 4");

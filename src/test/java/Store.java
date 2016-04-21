@@ -153,20 +153,19 @@ public class Store {
     }
 
     public boolean containsProduct(String name) {
-        return false;
+        return product1 != null && product1.getName().equalsIgnoreCase(name)
+            || product2 != null && product2.getName().equalsIgnoreCase(name)
+            || product3 != null && product3.getName().equalsIgnoreCase(name);
     }
 
     public Product getProduct(String name) {
-        if (product1 != null && product1.getName()
-            .equalsIgnoreCase(name)) {
+        if (product1 != null && product1.getName().equalsIgnoreCase(name)) {
             return product1;
         }
-        if (product2 != null && product2.getName()
-            .equalsIgnoreCase(name)) {
+        if (product2 != null && product2.getName().equalsIgnoreCase(name)) {
             return product2;
         }
-        if (product3 != null && product3.getName()
-            .equalsIgnoreCase(name)) {
+        if (product3 != null && product3.getName().equalsIgnoreCase(name)) {
             return product3;
         }
         return null;
