@@ -92,6 +92,7 @@ public class StarberksInterface {
 
     public void showReplenishmentStrategy() {
         // TODO see showProduct method for a similar example
+        store.showBestReplenishmentStrategy();
     }
 
     public void exitProgram() {
