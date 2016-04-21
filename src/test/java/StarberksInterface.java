@@ -153,6 +153,7 @@ public class StarberksInterface {
             showMenu();
             System.out.println("Please enter an option between 1 to 4");
             int choice = scanner.nextInt();
+            scanner.nextLine();  // finish reading until end of line
 
             switch (choice) {
                 case 1:
