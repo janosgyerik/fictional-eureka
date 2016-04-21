@@ -28,7 +28,7 @@ public class StarberksInterface {
 
         while (true) {
             String name = scanner.nextLine();
-            if (MIN_NAME_LENGTH <= name.length() && name.length() <= MAX_NAME_LENGTH) {
+            if (!(MIN_NAME_LENGTH <= name.length() && name.length() <= MAX_NAME_LENGTH)) {
                 System.err.printf("Please input a name between %s and %s characters : ", MIN_NAME_LENGTH, MAX_NAME_LENGTH);
                 continue;
             }
