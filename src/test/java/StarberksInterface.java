@@ -68,6 +68,7 @@ public class StarberksInterface {
         double unit = inputPositiveDouble(scanner, "Enter unit cost :");
         double inv = inputPositiveDouble(scanner, "Enter inventory cost :");
         double price = inputPositiveDouble(scanner, "Enter selling price :");
+        scanner.nextLine();  // finish reading until end of line
 
         return new Product(name, demand, setup, unit, inv, price);
     }
