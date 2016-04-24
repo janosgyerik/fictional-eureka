@@ -83,4 +83,14 @@ public class ChainedHashTableTest {
     public void head_of_chain_126_is_please() {
         assertEquals("please", chainedHashTable.getHeadOfChain(126));
     }
+
+    @Test
+    public void size_should_be_166532() {
+        assertEquals(166532, chainedHashTable.size());
+    }
+
+    @Test
+    public void most_frequent_word_should_be_() {
+        assertEquals("the", chainedHashTable.findMostFrequent());
+    }
 }

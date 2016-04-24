@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChainedHashTable {
@@ -82,5 +83,61 @@ public class ChainedHashTable {
 
     public String getHeadOfChain(int index) {
         return table[index].getName();
+    }
+
+    public int size() {
+        int count = 0;
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            DataRecord node = table[i];
+            while (node != null) {
+                ++count;
+                node = node.getNext();
+            }
+        }
+        return count;
+    }
+
+    public String findMostFrequent() {
+        int mostFrequentCount = 0;
+        String mostFrequent = null;
+
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            String localMostFrequent = findMostFrequent(table[i]);
+            int count = count(localMostFrequent);
+            if (count > mostFrequentCount) {
+                mostFrequentCount = count;
+                mostFrequent = localMostFrequent;
+            }
+        }
+        return mostFrequent;
+    }
+
+    private String findMostFrequent(DataRecord node) {
+        List<String> words = new ArrayList<>();
+        while (node != null) {
+            words.add(node.getName());
+            node = node.getNext();
+        }
+
+        Collections.sort(words);
+
+        int mostFrequentCount = 0;
+        String mostFrequent = "";
+
+        String prev = "";
+        int count = 0;
+        for (String word : words) {
+            if (word.equals(prev)) {
+                ++count;
+                if (count > mostFrequentCount) {
+                    mostFrequentCount = count;
+                    mostFrequent = word;
+                }
+            } else {
+                count = 0;
+            }
+            prev = word;
+        }
+        return mostFrequent;
     }
 }
