@@ -13,10 +13,26 @@ public class Driver {
         printWordCount(ctable, "vampire");
         printWordCount(ctable, "expostulate");
         printWordCount(ctable, "fangoriously");
+
+        System.out.println("Length of the longest chain: " + ctable.getLongestChainLength());
+        System.out.println("Length of the shortest chain: " + ctable.getShortestChainLength());
+        System.out.println("Distinct words: " + ctable.countDistinctWords());
+
+        printFirstWordInChain(ctable, 0);
+        printFirstWordInChain(ctable, 27);
+        printFirstWordInChain(ctable, 43);
+        printFirstWordInChain(ctable, 126);
+
+        System.out.println("Total word count: " + ctable.size());
+        System.out.println("Most frequent word: " + ctable.findMostFrequent());
     }
 
     private static void printWordCount(ChainedHashTable ctable, String word) {
         System.out.printf("The word %s appears %d times in the text.\n", word, ctable.count(word));
+    }
+
+    private static void printFirstWordInChain(ChainedHashTable ctable, int index) {
+        System.out.printf("First word of bucket %d is '%s'.\n", index, ctable.getHeadOfChain(index));
     }
 
     ChainedHashTable getChained() throws IOException {
