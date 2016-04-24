@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChainedHashTable {
-    static final int TABLE_SIZE = 127;
+    private static final int TABLE_SIZE = 127;
     private DataRecord[] table = new DataRecord[TABLE_SIZE];
 
     private int getIndex(String word) {
