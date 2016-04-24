@@ -19,9 +19,13 @@ public class Driver {
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
         String line;
         while ((line = rd.readLine()) != null) {
-            String[] words = line.replaceAll("[^a-zA-Z ]", " ")
+            line = line.trim().replaceAll("[^a-zA-Z ]", " ")
                 .toLowerCase()
-                .split("\\s+");
+                .trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+            String[] words = line.split("\\s+");
             for (String word : words) {
                 ctable.add(word);
             }

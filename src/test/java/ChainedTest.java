@@ -58,4 +58,9 @@ public class ChainedTest {
     public void shortest_chain_length_should_be_197() {
         assertEquals(197, chained.getShortestChainLength());
     }
+
+    @Test
+    public void distinct_words_should_be_9517() {
+        assertEquals(9516, chained.countDistinctWords());
+    }
 }

@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Chained {
     static final int TABLE_SIZE = 127;
     static final DataRecord NEVER_USED = null;
@@ -18,15 +21,10 @@ public class Chained {
         }
 
         return result % TABLE_SIZE;
-
     }
 
     public int getLongestChain(String name) {
         return 0;
-    }
-
-    public void getDistinctWords() {
-
     }
 
     public void getTotalWordCount() {
@@ -120,5 +118,22 @@ public class Chained {
             node = node.getNext();
         }
         return length;
+    }
+
+    public int countDistinctWords() {
+        int count = 0;
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            count += countDistinct(table[i]);
+        }
+        return count;
+    }
+
+    private long countDistinct(DataRecord node) {
+        List<String> words = new ArrayList<>();
+        while (node != null) {
+            words.add(node.getName());
+            node = node.getNext();
+        }
+        return words.stream().distinct().count();
     }
 }
