@@ -15,14 +15,13 @@ public class Tour {
         }
     }
 
+    // A dummy node to mark the start. This simplifies some of the looping logic.
     private final Node start = new Node();
 
     private int size = 0;
 
     // create an empty tour
-    public Tour() {
-
-    }
+    public Tour() {}
 
     // create a 4 point tour a->b->c->d->a
     public Tour(Point a, Point b, Point c, Point d) {
@@ -30,13 +29,13 @@ public class Tour {
     }
 
     private void add(Point... points) {
-        Node runner = start;
-        while (runner.next != null) {
-            runner = runner.next;
+        Node node = start;
+        while (node.next != null) {
+            node = node.next;
         }
         for (Point p : points) {
-            runner.next = new Node(p);
-            runner = runner.next;
+            node.next = new Node(p);
+            node = node.next;
             ++size;
         }
     }
@@ -65,11 +64,11 @@ public class Tour {
         double distance = 0;
 
         Point prev = start.next.p;
-        Node runner = start.next.next;
-        while (runner != null) {
-            distance += prev.distanceTo(runner.p);
-            prev = runner.p;
-            runner = runner.next;
+        Node node = start.next.next;
+        while (node != null) {
+            distance += prev.distanceTo(node.p);
+            prev = node.p;
+            node = node.next;
         }
         distance += prev.distanceTo(start.next.p);
         return distance;
@@ -90,14 +89,14 @@ public class Tour {
         double min = Double.MAX_VALUE;
 
         Node nearest = start;
-        Node runner = start;
-        while (runner.next != null) {
-            double distance = p.distanceTo(runner.next.p);
+        Node node = start;
+        while (node.next != null) {
+            double distance = p.distanceTo(node.next.p);
             if (distance < min) {
                 min = distance;
-                nearest = runner.next;
+                nearest = node.next;
             }
-            runner = runner.next;
+            node = node.next;
         }
         return nearest;
     }
@@ -125,27 +124,27 @@ public class Tour {
         double min = Double.MAX_VALUE;
 
         Node smallestIncrease = start;
-        Node runner = start.next;
-        while (runner.next != null) {
-            double existing = runner.p.distanceTo(runner.next.p);
-            double distCurrentToNew = runner.p.distanceTo(p);
-            double distNextToNew = runner.next.p.distanceTo(p);
+        Node node = start.next;
+        while (node.next != null) {
+            double existing = node.p.distanceTo(node.next.p);
+            double distCurrentToNew = node.p.distanceTo(p);
+            double distNextToNew = node.next.p.distanceTo(p);
 
             double increase = -existing + distCurrentToNew + distNextToNew;
             if (increase < min) {
                 min = increase;
-                smallestIncrease = runner;
+                smallestIncrease = node;
             }
-            runner = runner.next;
+            node = node.next;
         }
 
-        double existing = runner.p.distanceTo(start.next.p);
-        double distCurrentToNew = runner.p.distanceTo(p);
+        double existing = node.p.distanceTo(start.next.p);
+        double distCurrentToNew = node.p.distanceTo(p);
         double distNextToNew = start.next.p.distanceTo(p);
 
         double increase = -existing + distCurrentToNew + distNextToNew;
         if (increase < min) {
-            smallestIncrease = runner;
+            smallestIncrease = node;
         }
 
         return smallestIncrease;

@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class SmallestInsertion {
+
     public static final String INPUT_FILE = "tsp1000.txt";
 
     public static void main(String[] args) throws FileNotFoundException {
