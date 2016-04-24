@@ -1,47 +1,32 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Driver {
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        // TODO Auto-generated method stub
-
+    public static void main(String[] args) throws IOException {
         Driver me = new Driver();
         me.doIt();
     }
 
-    public void doIt() throws FileNotFoundException, IOException {
+    public void doIt() throws IOException {
+        Chained ctable = getChained();
+        System.out.println(ctable);
+    }
+
+    Chained getChained() throws IOException {
         Chained ctable = new Chained();
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
-        String line = "";
+        String line;
         while ((line = rd.readLine()) != null) {
-            String[] parts = line.replaceAll("[^a-zA-Z ]", " ")
+            String[] words = line.replaceAll("[^a-zA-Z ]", " ")
                 .toLowerCase()
                 .split("\\s+");
-            //System.out.println(Arrays.toString(parts));
-            for (String j : parts) {
-                ctable.Add(j);
+            for (String word : words) {
+                ctable.add(word);
             }
         }
-        System.out.println(ctable);
-
-
-        //		Chained ctable = new Chained();
-        //		//first change this to only take one arguement
-        //		ctable.Add("Vic");
-        //		ctable.Add("Whc");
-        //		ctable.Add("Dic");
-        //		ctable.Add("Phc");
-        //		ctable.Add("Something");
-        //		ctable.Add("Joe");
-        //		ctable.Add("Ed");
-        //		ctable.Add("Fred");
-        //		System.out.println(ctable);
-        //System.out.println(ctable.getLongestChain(name));
-        //System.out.println(ctable.getLongestChain("something"));
-        //
+        return ctable;
     }
 
 }
