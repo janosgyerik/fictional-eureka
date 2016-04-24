@@ -19,7 +19,7 @@ public class ChainedHashTable {
     private int calculateHashCode(String word) {
         int result = 0;
         for (int i = 0; i < word.length(); i++) {
-            result = result + (int) word.charAt(i);
+            result = result + word.charAt(i);
         }
         return result;
     }
