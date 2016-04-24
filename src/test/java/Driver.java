@@ -5,13 +5,6 @@ import java.io.IOException;
 public class Driver {
 
     public static void main(String[] args) throws IOException {
-        Driver me = new Driver();
-        me.doIt();
-    }
-
-    public void doIt() throws IOException {
-        ChainedHashTable ctable = getChained();
-        System.out.println(ctable);
     }
 
     ChainedHashTable getChained() throws IOException {
