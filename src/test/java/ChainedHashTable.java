@@ -12,18 +12,20 @@ public class ChainedHashTable {
         }
     }
 
-    private int hashFunction(String word) {
+    private int getIndex(String word) {
+        return calculateHashCode(word) % TABLE_SIZE;
+    }
+
+    private int calculateHashCode(String word) {
         int result = 0;
         for (int i = 0; i < word.length(); i++) {
-            //converts to ASCII gets the total vaule in each for ASCII for each letter
             result = result + (int) word.charAt(i);
         }
-
-        return result % TABLE_SIZE;
+        return result;
     }
 
     public void add(String name) {
-        int bucket = hashFunction(name);
+        int bucket = getIndex(name);
         DataRecord newNode = new DataRecord();
         newNode.setName(name);
         newNode.setNext(table[bucket]);
@@ -52,7 +54,7 @@ public class ChainedHashTable {
     }
 
     public int count(String word) {
-        int index = hashFunction(word);
+        int index = getIndex(word);
         DataRecord node = table[index];
         int count = 0;
         while (node != null) {
