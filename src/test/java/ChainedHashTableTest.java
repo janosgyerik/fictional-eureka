@@ -60,8 +60,8 @@ public class ChainedHashTableTest {
     }
 
     @Test
-    public void distinct_words_should_be_9517() {
-        assertEquals(9516, chainedHashTable.countDistinctWords());
+    public void distinct_words_should_be_9617() {
+        assertEquals(9617, chainedHashTable.countDistinctWords());
     }
 
     @Test
@@ -85,8 +85,8 @@ public class ChainedHashTableTest {
     }
 
     @Test
-    public void size_should_be_166532() {
-        assertEquals(166532, chainedHashTable.size());
+    public void size_should_be_166949() {
+        assertEquals(166949, chainedHashTable.size());
     }
 
     @Test
