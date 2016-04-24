@@ -25,27 +25,6 @@ public class ChainedHashTable {
         table[bucket] = newNode;
     }
 
-    public String toString() {
-        String rtn = "";
-
-        for (int i = 0; i < TABLE_SIZE; i++) {
-            rtn += "bucket[" + i + "] = ";
-            if (table[i] == null) {
-                rtn += "NEVER_USED\n";
-            } else {
-                DataRecord n = table[i];
-                rtn += "[ ";
-                while (n != null) {
-                    rtn += n + " ";
-                    n = n.getNext();
-                }
-                rtn += "]\n";
-            }
-        }
-
-        return rtn;
-    }
-
     public int count(String word) {
         int index = getIndex(word);
         DataRecord node = table[index];
