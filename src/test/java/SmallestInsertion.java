@@ -7,11 +7,11 @@ public class SmallestInsertion {
 
     public static void main(String[] args) throws FileNotFoundException {
         List<Point> points = InputReader.fromFile(INPUT_FILE);
-        Tour tour = createTourUsingInsertNearest(points);
+        Tour tour = createTourUsingInsertSmallest(points);
         printStats(tour);
     }
 
-    private static Tour createTourUsingInsertNearest(List<Point> points) {
+    private static Tour createTourUsingInsertSmallest(List<Point> points) {
         Tour tour = new Tour();
         for (Point point : points) {
             tour.insertSmallest(point);
