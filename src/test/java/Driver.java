@@ -14,25 +14,25 @@ public class Driver {
         printWordCount(ctable, "expostulate");
         printWordCount(ctable, "fangoriously");
 
-        System.out.println("Length of the longest chain: " + ctable.getLongestChainLength());
-        System.out.println("Length of the shortest chain: " + ctable.getShortestChainLength());
+        System.out.println("Length of the longest chain: " + ctable.findLongestChainLength());
+        System.out.println("Length of the shortest chain: " + ctable.findShortestChainLength());
         System.out.println("Distinct words: " + ctable.countDistinctWords());
 
-        printFirstWordInChain(ctable, 0);
-        printFirstWordInChain(ctable, 27);
-        printFirstWordInChain(ctable, 43);
-        printFirstWordInChain(ctable, 126);
+        printFirstWordInBucket(ctable, 0);
+        printFirstWordInBucket(ctable, 27);
+        printFirstWordInBucket(ctable, 43);
+        printFirstWordInBucket(ctable, 126);
 
         System.out.println("Total word count: " + ctable.size());
         System.out.println("Most frequent word: " + ctable.findMostFrequent());
     }
 
     private static void printWordCount(ChainedHashTable ctable, String word) {
-        System.out.printf("The word %s appears %d times in the text.\n", word, ctable.count(word));
+        System.out.printf("The word %s appears %d times in the text.\n", word, ctable.countWord(word));
     }
 
-    private static void printFirstWordInChain(ChainedHashTable ctable, int index) {
-        System.out.printf("First word of bucket %d is '%s'.\n", index, ctable.getHeadOfChain(index));
+    private static void printFirstWordInBucket(ChainedHashTable ctable, int index) {
+        System.out.printf("First word of bucket %d is '%s'.\n", index, ctable.getHeadOfBucket(index));
     }
 
     ChainedHashTable getChained() throws IOException {

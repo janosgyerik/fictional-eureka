@@ -26,7 +26,7 @@ public class ChainedHashTable {
         table[bucket] = newNode;
     }
 
-    public int count(String word) {
+    public int countWord(String word) {
         int index = getIndex(word);
         DataRecord node = table[index];
         int count = 0;
@@ -39,7 +39,7 @@ public class ChainedHashTable {
         return count;
     }
 
-    public int getLongestChainLength() {
+    public int findLongestChainLength() {
         int longest = 0;
         for (int i = 0; i < TABLE_SIZE; ++i) {
             longest = Math.max(longest, getChainLength(table[i]));
@@ -47,7 +47,7 @@ public class ChainedHashTable {
         return longest;
     }
 
-    public int getShortestChainLength() {
+    public int findShortestChainLength() {
         int shortest = Integer.MAX_VALUE;
         for (int i = 0; i < TABLE_SIZE; ++i) {
             shortest = Math.min(shortest, getChainLength(table[i]));
@@ -81,7 +81,7 @@ public class ChainedHashTable {
         return words.stream().distinct().count();
     }
 
-    public String getHeadOfChain(int index) {
+    public String getHeadOfBucket(int index) {
         return table[index].getName();
     }
 
@@ -103,7 +103,7 @@ public class ChainedHashTable {
 
         for (int i = 0; i < TABLE_SIZE; ++i) {
             String localMostFrequent = findMostFrequent(table[i]);
-            int count = count(localMostFrequent);
+            int count = countWord(localMostFrequent);
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
                 mostFrequent = localMostFrequent;
