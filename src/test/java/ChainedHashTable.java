@@ -3,14 +3,7 @@ import java.util.List;
 
 public class ChainedHashTable {
     static final int TABLE_SIZE = 127;
-    static final DataRecord NEVER_USED = null;
     private DataRecord[] table = new DataRecord[TABLE_SIZE];
-
-    public ChainedHashTable() {
-        for (int i = 0; i < TABLE_SIZE; i++) {
-            table[i] = NEVER_USED;
-        }
-    }
 
     private int getIndex(String word) {
         return calculateHashCode(word) % TABLE_SIZE;
@@ -37,7 +30,7 @@ public class ChainedHashTable {
 
         for (int i = 0; i < TABLE_SIZE; i++) {
             rtn += "bucket[" + i + "] = ";
-            if (table[i] == NEVER_USED) {
+            if (table[i] == null) {
                 rtn += "NEVER_USED\n";
             } else {
                 DataRecord n = table[i];
