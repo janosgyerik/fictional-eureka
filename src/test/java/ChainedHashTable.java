@@ -12,7 +12,6 @@ public class ChainedHashTable {
         }
     }
 
-    //stores where the variable goes
     private int hashFunction(String word) {
         int result = 0;
         for (int i = 0; i < word.length(); i++) {
@@ -21,36 +20,6 @@ public class ChainedHashTable {
         }
 
         return result % TABLE_SIZE;
-    }
-
-    public int getLongestChain(String name) {
-        return 0;
-    }
-
-    public void getTotalWordCount() {
-
-    }
-
-    public void getWordFrequency() {
-
-    }
-
-    public int size() {
-        return TABLE_SIZE;
-    }
-
-    public DataRecord search(String name) {
-        int bucket = hashFunction(name);
-        DataRecord node = table[bucket];
-
-        while (node != null) {
-            if (node.getName().equalsIgnoreCase(name)) {
-                return node;
-            }
-            node = node.getNext();
-        }
-
-        return null;
     }
 
     public void add(String name) {
