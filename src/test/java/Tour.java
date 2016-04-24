@@ -107,8 +107,47 @@ public class Tour {
         ++size;
     }
 
-    // insert p using smallest increase heuristic
+    /*
+    Smallest increase heuristic:  Read in the next point, and add it to the current tour
+    after the point where it results in the least possible increase in the tour length.
+    (If there is more than one point, insert it after the first such point you discover.)
+     */
     public void insertSmallest(Point p) {
+        Node smallestIncrease = findSmallestIncrease(p);
+        insertAfter(smallestIncrease, p);
+    }
 
+    private Node findSmallestIncrease(Point p) {
+        if (start.next == null) {
+            return start;
+        }
+
+        double min = Double.MAX_VALUE;
+
+        Node smallestIncrease = start;
+        Node runner = start.next;
+        while (runner.next != null) {
+            double existing = runner.p.distanceTo(runner.next.p);
+            double distCurrentToNew = runner.p.distanceTo(p);
+            double distNextToNew = runner.next.p.distanceTo(p);
+
+            double increase = -existing + distCurrentToNew + distNextToNew;
+            if (increase < min) {
+                min = increase;
+                smallestIncrease = runner;
+            }
+            runner = runner.next;
+        }
+
+        double existing = runner.p.distanceTo(start.next.p);
+        double distCurrentToNew = runner.p.distanceTo(p);
+        double distNextToNew = start.next.p.distanceTo(p);
+
+        double increase = -existing + distCurrentToNew + distNextToNew;
+        if (increase < min) {
+            smallestIncrease = runner;
+        }
+
+        return smallestIncrease;
     }
 }
