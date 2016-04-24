@@ -12,7 +12,7 @@ public class Tour {
 
     private final Node start = new Node();
 
-    private int count = 0;
+    private int size = 0;
 
     // create an empty tour
     public Tour() {
@@ -32,7 +32,7 @@ public class Tour {
         for (Point p : points) {
             runner.next = new Node(p);
             runner = runner.next;
-            ++count;
+            ++size;
         }
     }
 
@@ -52,7 +52,7 @@ public class Tour {
 
     // number of points on tour
     public int size() {
-        return 0;
+        return size;
     }
 
     // return the total distance of the tour
