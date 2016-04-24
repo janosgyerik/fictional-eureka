@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chained {
+public class ChainedHashTable {
     static final int TABLE_SIZE = 127;
     static final DataRecord NEVER_USED = null;
     private DataRecord[] table = new DataRecord[TABLE_SIZE];
 
-    public Chained() {
+    public ChainedHashTable() {
         for (int i = 0; i < TABLE_SIZE; i++) {
             table[i] = NEVER_USED;
         }

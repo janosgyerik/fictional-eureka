@@ -10,12 +10,12 @@ public class Driver {
     }
 
     public void doIt() throws IOException {
-        Chained ctable = getChained();
+        ChainedHashTable ctable = getChained();
         System.out.println(ctable);
     }
 
-    Chained getChained() throws IOException {
-        Chained ctable = new Chained();
+    ChainedHashTable getChained() throws IOException {
+        ChainedHashTable ctable = new ChainedHashTable();
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
         String line;
         while ((line = rd.readLine()) != null) {
