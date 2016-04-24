@@ -5,6 +5,18 @@ import java.io.IOException;
 public class Driver {
 
     public static void main(String[] args) throws IOException {
+        ChainedHashTable ctable = new Driver().getChained();
+
+        printWordCount(ctable, "transylvania");
+        printWordCount(ctable, "harker");
+        printWordCount(ctable, "renfield");
+        printWordCount(ctable, "vampire");
+        printWordCount(ctable, "expostulate");
+        printWordCount(ctable, "fangoriously");
+    }
+
+    private static void printWordCount(ChainedHashTable ctable, String word) {
+        System.out.printf("The word %s appears %d times in the text.\n", word, ctable.count(word));
     }
 
     ChainedHashTable getChained() throws IOException {
