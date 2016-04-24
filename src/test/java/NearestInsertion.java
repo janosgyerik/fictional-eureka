@@ -6,9 +6,13 @@ public class NearestInsertion {
     public static final String INPUT_FILE = "tsp1000.txt";
 
     public static void main(String[] args) throws FileNotFoundException {
-        List<Point> points = InputReader.fromFile(INPUT_FILE);
-        Tour tour = createTourUsingInsertNearest(points);
+        Tour tour = createTour();
         printStats(tour);
+    }
+
+    static Tour createTour() throws FileNotFoundException {
+        List<Point> points = InputReader.fromFile(INPUT_FILE);
+        return createTourUsingInsertNearest(points);
     }
 
     private static Tour createTourUsingInsertNearest(List<Point> points) {
