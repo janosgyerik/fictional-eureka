@@ -136,4 +136,8 @@ public class ChainedHashTable {
         }
         return words.stream().distinct().count();
     }
+
+    public String getHeadOfChain(int index) {
+        return table[index].getName();
+    }
 }

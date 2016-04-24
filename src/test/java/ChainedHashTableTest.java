@@ -63,4 +63,24 @@ public class ChainedHashTableTest {
     public void distinct_words_should_be_9517() {
         assertEquals(9516, chainedHashTable.countDistinctWords());
     }
+
+    @Test
+    public void head_of_chain_0_is_donate() {
+        assertEquals("donate", chainedHashTable.getHeadOfChain(0));
+    }
+
+    @Test
+    public void head_of_chain_27_is_could() {
+        assertEquals("could", chainedHashTable.getHeadOfChain(27));
+    }
+
+    @Test
+    public void head_of_chain_43_is_necessarily() {
+        assertEquals("necessarily", chainedHashTable.getHeadOfChain(43));
+    }
+
+    @Test
+    public void head_of_chain_126_is_please() {
+        assertEquals("please", chainedHashTable.getHeadOfChain(126));
+    }
 }
