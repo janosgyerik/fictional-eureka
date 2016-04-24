@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 public class ChainedHashTable {
     private static final int TABLE_SIZE = 127;
@@ -31,7 +29,8 @@ public class ChainedHashTable {
         DataRecord node = table[index];
         int count = 0;
         while (node != null) {
-            if (node.getName().equalsIgnoreCase(word)) {
+            if (node.getName()
+                .equalsIgnoreCase(word)) {
                 ++count;
             }
             node = node.getNext();
@@ -72,13 +71,19 @@ public class ChainedHashTable {
         return count;
     }
 
+
     private long countDistinct(DataRecord node) {
-        List<String> words = new ArrayList<>();
-        while (node != null) {
-            words.add(node.getName());
-            node = node.getNext();
+        String[] words = toSortedArray(node);
+
+        String prev = "";
+        int count = 0;
+        for (String word : words) {
+            if (!word.equals(prev)) {
+                ++count;
+            }
+            prev = word;
         }
-        return words.stream().distinct().count();
+        return count;
     }
 
     public String getHeadOfBucket(int index) {
@@ -112,14 +117,24 @@ public class ChainedHashTable {
         return mostFrequent;
     }
 
-    private String findMostFrequent(DataRecord node) {
-        List<String> words = new ArrayList<>();
+    private void sort(String[] words) {
+        // TODO: implement your own (for example bubble sort)
+        Arrays.sort(words);
+    }
+
+    private String[] toSortedArray(DataRecord node) {
+        String[] words = new String[getChainLength(node)];
+        int i = 0;
         while (node != null) {
-            words.add(node.getName());
+            words[i++] = node.getName();
             node = node.getNext();
         }
+        sort(words);
+        return words;
+    }
 
-        Collections.sort(words);
+    private String findMostFrequent(DataRecord node) {
+        String[] words = toSortedArray(node);
 
         int mostFrequentCount = 0;
         String mostFrequent = "";
