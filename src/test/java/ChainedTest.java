@@ -48,4 +48,14 @@ public class ChainedTest {
     public void count_of_abcxyz_should_be_0() {
         assertEquals(0, chained.count("abcxyz"));
     }
+
+    @Test
+    public void longest_chain_length_should_be_8751() {
+        assertEquals(8751, chained.getLongestChainLength());
+    }
+
+    @Test
+    public void shortest_chain_length_should_be_197() {
+        assertEquals(197, chained.getShortestChainLength());
+    }
 }

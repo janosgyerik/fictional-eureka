@@ -3,7 +3,6 @@ public class Chained {
     static final DataRecord NEVER_USED = null;
     private DataRecord[] table = new DataRecord[TABLE_SIZE];
 
-
     public Chained() {
         for (int i = 0; i < TABLE_SIZE; i++) {
             table[i] = NEVER_USED;
@@ -96,5 +95,30 @@ public class Chained {
             node = node.getNext();
         }
         return count;
+    }
+
+    public int getLongestChainLength() {
+        int longest = 0;
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            longest = Math.max(longest, getChainLength(table[i]));
+        }
+        return longest;
+    }
+
+    public int getShortestChainLength() {
+        int shortest = Integer.MAX_VALUE;
+        for (int i = 0; i < TABLE_SIZE; ++i) {
+            shortest = Math.min(shortest, getChainLength(table[i]));
+        }
+        return shortest;
+    }
+
+    private int getChainLength(DataRecord node) {
+        int length = 0;
+        while (node != null) {
+            ++length;
+            node = node.getNext();
+        }
+        return length;
     }
 }
