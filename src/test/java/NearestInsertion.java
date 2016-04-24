@@ -21,7 +21,7 @@ public class NearestInsertion {
 
     private static void printStats(Tour tour) {
         tour.show();
-        System.out.printf("Tour distance = %s\n", tour.distance());
+        System.out.printf("Tour distance = %.4f\n", tour.distance());
         System.out.printf("Number of points = %s\n", tour.size());
     }
 }
