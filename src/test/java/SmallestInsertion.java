@@ -25,7 +25,7 @@ public class SmallestInsertion {
 
     private static void printStats(Tour tour) {
         tour.show();
-        System.out.printf("Tour distance = %.4f\n", tour.distance());
+        System.out.printf("Tour distance = %.4f\n", tour.length());
         System.out.printf("Number of points = %s\n", tour.size());
     }
 }

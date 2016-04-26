@@ -2,7 +2,7 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TourTest {
 
@@ -15,12 +15,24 @@ public class TourTest {
     }
 
     @Test
+    public void test_empty_tour_length() {
+        assertEquals(0, new Tour().length(), DELTA);
+    }
+
+    @Test
+    public void test_empty_tour_size() {
+        assertEquals(0, new Tour().size());
+    }
+
+    @Test
     public void test_nearestInsertion() throws FileNotFoundException {
-        assertEquals(27868.7106, NearestInsertion.createTour().distance(), DELTA);
+        assertEquals(27868.7106, NearestInsertion.createTour()
+            .length(), DELTA);
     }
 
     @Test
     public void test_smallestInsertion() throws FileNotFoundException {
-        assertEquals(17265.6282, SmallestInsertion.createTour().distance(), DELTA);
+        assertEquals(17265.6282, SmallestInsertion.createTour()
+            .length(), DELTA);
     }
 }
