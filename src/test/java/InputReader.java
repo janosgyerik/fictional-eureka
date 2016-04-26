@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class InputReader {
     public static List<Point> fromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(path));
+        scanner.useLocale(Locale.ROOT);
 
         // skip first line (containing w width and h height), we don't need it
         scanner.nextLine();
