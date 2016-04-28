@@ -18,8 +18,7 @@ public class ChainedHashTable {
 
     public void add(String name) {
         int bucket = getIndex(name);
-        DataRecord newNode = new DataRecord();
-        newNode.setName(name);
+        DataRecord newNode = new DataRecord(name);
         newNode.setNext(table[bucket]);
         table[bucket] = newNode;
     }

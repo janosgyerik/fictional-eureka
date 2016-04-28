@@ -1,7 +1,11 @@
 public class DataRecord {
 
     private DataRecord next;
-    private String name;
+    private final String name;
+
+    public DataRecord(String name) {
+        this.name = name;
+    }
 
     public DataRecord getNext() {
         return next;
@@ -13,10 +17,6 @@ public class DataRecord {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
