@@ -1,17 +1,17 @@
-public class DataRecord {
+public class LinkedList {
 
-    private DataRecord next;
+    private LinkedList next;
     private final String name;
 
-    public DataRecord(String name) {
+    public LinkedList(String name) {
         this.name = name;
     }
 
-    public DataRecord getNext() {
+    public LinkedList getNext() {
         return next;
     }
 
-    public void setNext(DataRecord next) {
+    public void setNext(LinkedList next) {
         this.next = next;
     }
 

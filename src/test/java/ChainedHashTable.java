@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class ChainedHashTable {
     private static final int BUCKETS_COUNT = 127;
-    private DataRecord[] buckets = new DataRecord[BUCKETS_COUNT];
+    private LinkedList[] buckets = new LinkedList[BUCKETS_COUNT];
 
     private int getIndex(String word) {
         return calculateHashCode(word) % BUCKETS_COUNT;
@@ -18,14 +18,14 @@ public class ChainedHashTable {
 
     public void add(String name) {
         int bucket = getIndex(name);
-        DataRecord newNode = new DataRecord(name);
+        LinkedList newNode = new LinkedList(name);
         newNode.setNext(buckets[bucket]);
         buckets[bucket] = newNode;
     }
 
     public int countWord(String word) {
         int index = getIndex(word);
-        DataRecord node = buckets[index];
+        LinkedList node = buckets[index];
         int count = 0;
         while (node != null) {
             if (node.getName()
@@ -53,7 +53,7 @@ public class ChainedHashTable {
         return shortest;
     }
 
-    private int getChainLength(DataRecord node) {
+    private int getChainLength(LinkedList node) {
         int length = 0;
         while (node != null) {
             ++length;
@@ -71,7 +71,7 @@ public class ChainedHashTable {
     }
 
 
-    private long countDistinct(DataRecord node) {
+    private long countDistinct(LinkedList node) {
         String[] words = toSortedArray(node);
 
         String prev = "";
@@ -92,7 +92,7 @@ public class ChainedHashTable {
     public int size() {
         int count = 0;
         for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            DataRecord node = buckets[i];
+            LinkedList node = buckets[i];
             while (node != null) {
                 ++count;
                 node = node.getNext();
@@ -116,7 +116,7 @@ public class ChainedHashTable {
         return mostFrequent;
     }
 
-    private String findMostFrequent(DataRecord node) {
+    private String findMostFrequent(LinkedList node) {
         String[] words = toSortedArray(node);
 
         int mostFrequentCount = 0;
@@ -144,7 +144,7 @@ public class ChainedHashTable {
         Arrays.sort(words);
     }
 
-    private String[] toSortedArray(DataRecord node) {
+    private String[] toSortedArray(LinkedList node) {
         String[] words = new String[getChainLength(node)];
         int i = 0;
         while (node != null) {
