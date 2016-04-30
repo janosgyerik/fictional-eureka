@@ -86,7 +86,7 @@ public class ChainedHashTable {
 
         for (LinkedList bucket : buckets) {
             String localMostFrequent = findMostFrequent(bucket);
-            int count = countWord(localMostFrequent);
+            int count = bucket.count(localMostFrequent);
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
                 mostFrequent = localMostFrequent;
