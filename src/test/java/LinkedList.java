@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class LinkedList {
 
     private static class Node {
@@ -48,43 +46,20 @@ public class LinkedList {
     }
 
     public String findMostFrequent() {
-        String[] words = toSortedArray();
+        LinkedList copy = copy();
 
         int mostFrequentCount = 0;
         String mostFrequent = null;
 
-        String prev = null;
-        int count = 0;
-        for (String word : words) {
-            if (word.equals(prev)) {
-                ++count;
-                if (count > mostFrequentCount) {
-                    mostFrequentCount = count;
-                    mostFrequent = word;
-                }
-            } else {
-                count = 0;
+        while (!copy.isEmpty()) {
+            String candidate = copy.getFirst();
+            int count = copy.removeAll(candidate);
+            if (count > mostFrequentCount) {
+                mostFrequentCount = count;
+                mostFrequent = candidate;
             }
-            prev = word;
         }
         return mostFrequent;
-    }
-
-    private void sort(String[] words) {
-        Arrays.sort(words);
-        // BubbleSort.sort(words);
-    }
-
-    private String[] toSortedArray() {
-        String[] words = new String[size];
-        Node node = dummy.next;
-        int i = 0;
-        while (node != null) {
-            words[i++] = node.word;
-            node = node.next;
-        }
-        sort(words);
-        return words;
     }
 
     public long countDistinct() {
@@ -98,16 +73,19 @@ public class LinkedList {
         return count;
     }
 
-    private void removeAll(String word) {
+    private int removeAll(String word) {
+        int count = 0;
         Node node = dummy;
         while (node.next != null) {
             if (node.next.word.equals(word)) {
                 node.next = node.next.next;
                 size--;
+                count++;
             } else {
                 node = node.next;
             }
         }
+        return count;
     }
 
     private LinkedList copy() {
