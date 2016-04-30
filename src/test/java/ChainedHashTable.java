@@ -54,8 +54,8 @@ public class ChainedHashTable {
     }
 
 
-    private long countDistinct(LinkedList node) {
-        String[] words = node.toSortedArray();
+    private long countDistinct(LinkedList bucket) {
+        String[] words = bucket.toSortedArray();
 
         String prev = "";
         int count = 0;
@@ -95,8 +95,8 @@ public class ChainedHashTable {
         return mostFrequent;
     }
 
-    private String findMostFrequent(LinkedList node) {
-        String[] words = node.toSortedArray();
+    private String findMostFrequent(LinkedList bucket) {
+        String[] words = bucket.toSortedArray();
 
         int mostFrequentCount = 0;
         String mostFrequent = null;
