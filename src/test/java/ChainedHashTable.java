@@ -1,8 +1,9 @@
 public class ChainedHashTable {
     private static final int BUCKETS_COUNT = 127;
-    private final LinkedList[] buckets = new LinkedList[BUCKETS_COUNT];
+    private final LinkedList[] buckets;
 
     public ChainedHashTable() {
+        buckets = new LinkedList[BUCKETS_COUNT];
         for (int i = 0; i < buckets.length; ++i) {
             buckets[i] = new LinkedList();
         }
