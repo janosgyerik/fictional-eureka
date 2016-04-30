@@ -43,12 +43,35 @@ public class LinkedList {
         return size;
     }
 
+    public String findMostFrequent() {
+        String[] words = toSortedArray();
+
+        int mostFrequentCount = 0;
+        String mostFrequent = null;
+
+        String prev = null;
+        int count = 0;
+        for (String word : words) {
+            if (word.equals(prev)) {
+                ++count;
+                if (count > mostFrequentCount) {
+                    mostFrequentCount = count;
+                    mostFrequent = word;
+                }
+            } else {
+                count = 0;
+            }
+            prev = word;
+        }
+        return mostFrequent;
+    }
+
     private void sort(String[] words) {
         Arrays.sort(words);
         // BubbleSort.sort(words);
     }
 
-    public String[] toSortedArray() {
+    private String[] toSortedArray() {
         String[] words = new String[size];
         Node node = dummy.next;
         int i = 0;
@@ -58,5 +81,19 @@ public class LinkedList {
         }
         sort(words);
         return words;
+    }
+
+    public long countDistinct() {
+        String[] words = toSortedArray();
+
+        String prev = null;
+        int count = 0;
+        for (String word : words) {
+            if (!word.equals(prev)) {
+                ++count;
+            }
+            prev = word;
+        }
+        return count;
     }
 }

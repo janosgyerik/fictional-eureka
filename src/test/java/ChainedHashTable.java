@@ -48,22 +48,7 @@ public class ChainedHashTable {
     public int countDistinctWords() {
         int count = 0;
         for (LinkedList bucket : buckets) {
-            count += countDistinct(bucket);
-        }
-        return count;
-    }
-
-
-    private long countDistinct(LinkedList bucket) {
-        String[] words = bucket.toSortedArray();
-
-        String prev = null;
-        int count = 0;
-        for (String word : words) {
-            if (!word.equals(prev)) {
-                ++count;
-            }
-            prev = word;
+            count += bucket.countDistinct();
         }
         return count;
     }
@@ -85,35 +70,12 @@ public class ChainedHashTable {
         String mostFrequent = null;
 
         for (LinkedList bucket : buckets) {
-            String localMostFrequent = findMostFrequent(bucket);
+            String localMostFrequent = bucket.findMostFrequent();
             int count = bucket.count(localMostFrequent);
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
                 mostFrequent = localMostFrequent;
             }
-        }
-        return mostFrequent;
-    }
-
-    private String findMostFrequent(LinkedList bucket) {
-        String[] words = bucket.toSortedArray();
-
-        int mostFrequentCount = 0;
-        String mostFrequent = null;
-
-        String prev = null;
-        int count = 0;
-        for (String word : words) {
-            if (word.equals(prev)) {
-                ++count;
-                if (count > mostFrequentCount) {
-                    mostFrequentCount = count;
-                    mostFrequent = word;
-                }
-            } else {
-                count = 0;
-            }
-            prev = word;
         }
         return mostFrequent;
     }
