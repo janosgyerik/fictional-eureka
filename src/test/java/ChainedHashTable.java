@@ -2,10 +2,16 @@ import java.util.Arrays;
 
 public class ChainedHashTable {
     private static final int BUCKETS_COUNT = 127;
-    private LinkedList[] buckets = new LinkedList[BUCKETS_COUNT];
+    private final LinkedList[] buckets = new LinkedList[BUCKETS_COUNT];
+
+    public ChainedHashTable() {
+        for (int i = 0; i < buckets.length; ++i) {
+            buckets[i] = new LinkedList();
+        }
+    }
 
     private int getIndex(String word) {
-        return calculateHashCode(word) % BUCKETS_COUNT;
+        return calculateHashCode(word) % buckets.length;
     }
 
     private int calculateHashCode(String word) {
@@ -16,31 +22,18 @@ public class ChainedHashTable {
         return result;
     }
 
-    public void add(String name) {
-        int bucket = getIndex(name);
-        LinkedList newNode = new LinkedList(name);
-        newNode.setNext(buckets[bucket]);
-        buckets[bucket] = newNode;
+    public void add(String word) {
+        buckets[getIndex(word)].addFirst(word);
     }
 
     public int countWord(String word) {
-        int index = getIndex(word);
-        LinkedList node = buckets[index];
-        int count = 0;
-        while (node != null) {
-            if (node.getName()
-                .equalsIgnoreCase(word)) {
-                ++count;
-            }
-            node = node.getNext();
-        }
-        return count;
+        return buckets[getIndex(word)].count(word);
     }
 
     public int findLongestChainLength() {
         int longest = 0;
         for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            longest = Math.max(longest, getChainLength(buckets[i]));
+            longest = Math.max(longest, buckets[i].size());
         }
         return longest;
     }
@@ -48,18 +41,9 @@ public class ChainedHashTable {
     public int findShortestChainLength() {
         int shortest = Integer.MAX_VALUE;
         for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            shortest = Math.min(shortest, getChainLength(buckets[i]));
+            shortest = Math.min(shortest, buckets[i].size());
         }
         return shortest;
-    }
-
-    private int getChainLength(LinkedList node) {
-        int length = 0;
-        while (node != null) {
-            ++length;
-            node = node.getNext();
-        }
-        return length;
     }
 
     public int countDistinctWords() {
@@ -72,7 +56,7 @@ public class ChainedHashTable {
 
 
     private long countDistinct(LinkedList node) {
-        String[] words = toSortedArray(node);
+        String[] words = node.toSortedArray();
 
         String prev = "";
         int count = 0;
@@ -86,17 +70,13 @@ public class ChainedHashTable {
     }
 
     public String getHeadOfBucket(int index) {
-        return buckets[index].getName();
+        return buckets[index].getFirst();
     }
 
     public int size() {
         int count = 0;
         for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            LinkedList node = buckets[i];
-            while (node != null) {
-                ++count;
-                node = node.getNext();
-            }
+            count += buckets[i].size();
         }
         return count;
     }
@@ -117,7 +97,7 @@ public class ChainedHashTable {
     }
 
     private String findMostFrequent(LinkedList node) {
-        String[] words = toSortedArray(node);
+        String[] words = node.toSortedArray();
 
         int mostFrequentCount = 0;
         String mostFrequent = null;
@@ -137,21 +117,5 @@ public class ChainedHashTable {
             prev = word;
         }
         return mostFrequent;
-    }
-
-    private void sort(String[] words) {
-        // TODO: implement your own (for example bubble sort)
-        Arrays.sort(words);
-    }
-
-    private String[] toSortedArray(LinkedList node) {
-        String[] words = new String[getChainLength(node)];
-        int i = 0;
-        while (node != null) {
-            words[i++] = node.getName();
-            node = node.getNext();
-        }
-        sort(words);
-        return words;
     }
 }
