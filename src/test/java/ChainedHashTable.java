@@ -120,9 +120,9 @@ public class ChainedHashTable {
         String[] words = toSortedArray(node);
 
         int mostFrequentCount = 0;
-        String mostFrequent = "";
+        String mostFrequent = null;
 
-        String prev = "";
+        String prev = null;
         int count = 0;
         for (String word : words) {
             if (word.equals(prev)) {
