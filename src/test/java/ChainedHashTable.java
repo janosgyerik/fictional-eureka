@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class ChainedHashTable {
     private static final int BUCKETS_COUNT = 127;
     private final LinkedList[] buckets = new LinkedList[BUCKETS_COUNT];
@@ -32,24 +30,24 @@ public class ChainedHashTable {
 
     public int findLongestChainLength() {
         int longest = 0;
-        for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            longest = Math.max(longest, buckets[i].size());
+        for (LinkedList bucket : buckets) {
+            longest = Math.max(longest, bucket.size());
         }
         return longest;
     }
 
     public int findShortestChainLength() {
         int shortest = Integer.MAX_VALUE;
-        for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            shortest = Math.min(shortest, buckets[i].size());
+        for (LinkedList bucket : buckets) {
+            shortest = Math.min(shortest, bucket.size());
         }
         return shortest;
     }
 
     public int countDistinctWords() {
         int count = 0;
-        for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            count += countDistinct(buckets[i]);
+        for (LinkedList bucket : buckets) {
+            count += countDistinct(bucket);
         }
         return count;
     }
@@ -75,8 +73,8 @@ public class ChainedHashTable {
 
     public int size() {
         int count = 0;
-        for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            count += buckets[i].size();
+        for (LinkedList bucket : buckets) {
+            count += bucket.size();
         }
         return count;
     }
@@ -85,8 +83,8 @@ public class ChainedHashTable {
         int mostFrequentCount = 0;
         String mostFrequent = null;
 
-        for (int i = 0; i < BUCKETS_COUNT; ++i) {
-            String localMostFrequent = findMostFrequent(buckets[i]);
+        for (LinkedList bucket : buckets) {
+            String localMostFrequent = findMostFrequent(bucket);
             int count = countWord(localMostFrequent);
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
