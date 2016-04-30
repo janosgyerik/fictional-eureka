@@ -44,8 +44,8 @@ public class LinkedList {
     }
 
     private void sort(String[] words) {
-        // TODO: implement your own (for example bubble sort)
         Arrays.sort(words);
+        // BubbleSort.sort(words);
     }
 
     public String[] toSortedArray() {
