@@ -43,6 +43,10 @@ public class LinkedList {
         return size;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public String findMostFrequent() {
         String[] words = toSortedArray();
 
@@ -84,16 +88,38 @@ public class LinkedList {
     }
 
     public long countDistinct() {
-        String[] words = toSortedArray();
+        LinkedList copy = copy();
 
-        String prev = null;
         int count = 0;
-        for (String word : words) {
-            if (!word.equals(prev)) {
-                ++count;
-            }
-            prev = word;
+        while (!copy.isEmpty()) {
+            copy.removeAll(copy.getFirst());
+            count++;
         }
         return count;
+    }
+
+    private void removeAll(String word) {
+        Node node = dummy;
+        while (node.next != null) {
+            if (node.next.word.equals(word)) {
+                node.next = node.next.next;
+                size--;
+            } else {
+                node = node.next;
+            }
+        }
+    }
+
+    private LinkedList copy() {
+        LinkedList copy = new LinkedList();
+        Node node = dummy.next;
+        Node last = copy.dummy;
+        while (node != null) {
+            last.next = new Node(node.word, null);
+            last = last.next;
+            node = node.next;
+        }
+        copy.size = size;
+        return copy;
     }
 }
