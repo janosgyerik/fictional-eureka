@@ -57,7 +57,7 @@ public class ChainedHashTable {
     private long countDistinct(LinkedList bucket) {
         String[] words = bucket.toSortedArray();
 
-        String prev = "";
+        String prev = null;
         int count = 0;
         for (String word : words) {
             if (!word.equals(prev)) {
