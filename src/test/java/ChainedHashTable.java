@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class ChainedHashTable {
-    private static final int TABLE_SIZE = 127;
-    private DataRecord[] table = new DataRecord[TABLE_SIZE];
+    private static final int BUCKETS_COUNT = 127;
+    private DataRecord[] buckets = new DataRecord[BUCKETS_COUNT];
 
     private int getIndex(String word) {
-        return calculateHashCode(word) % TABLE_SIZE;
+        return calculateHashCode(word) % BUCKETS_COUNT;
     }
 
     private int calculateHashCode(String word) {
@@ -19,13 +19,13 @@ public class ChainedHashTable {
     public void add(String name) {
         int bucket = getIndex(name);
         DataRecord newNode = new DataRecord(name);
-        newNode.setNext(table[bucket]);
-        table[bucket] = newNode;
+        newNode.setNext(buckets[bucket]);
+        buckets[bucket] = newNode;
     }
 
     public int countWord(String word) {
         int index = getIndex(word);
-        DataRecord node = table[index];
+        DataRecord node = buckets[index];
         int count = 0;
         while (node != null) {
             if (node.getName()
@@ -39,16 +39,16 @@ public class ChainedHashTable {
 
     public int findLongestChainLength() {
         int longest = 0;
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            longest = Math.max(longest, getChainLength(table[i]));
+        for (int i = 0; i < BUCKETS_COUNT; ++i) {
+            longest = Math.max(longest, getChainLength(buckets[i]));
         }
         return longest;
     }
 
     public int findShortestChainLength() {
         int shortest = Integer.MAX_VALUE;
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            shortest = Math.min(shortest, getChainLength(table[i]));
+        for (int i = 0; i < BUCKETS_COUNT; ++i) {
+            shortest = Math.min(shortest, getChainLength(buckets[i]));
         }
         return shortest;
     }
@@ -64,8 +64,8 @@ public class ChainedHashTable {
 
     public int countDistinctWords() {
         int count = 0;
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            count += countDistinct(table[i]);
+        for (int i = 0; i < BUCKETS_COUNT; ++i) {
+            count += countDistinct(buckets[i]);
         }
         return count;
     }
@@ -86,13 +86,13 @@ public class ChainedHashTable {
     }
 
     public String getHeadOfBucket(int index) {
-        return table[index].getName();
+        return buckets[index].getName();
     }
 
     public int size() {
         int count = 0;
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            DataRecord node = table[i];
+        for (int i = 0; i < BUCKETS_COUNT; ++i) {
+            DataRecord node = buckets[i];
             while (node != null) {
                 ++count;
                 node = node.getNext();
@@ -105,8 +105,8 @@ public class ChainedHashTable {
         int mostFrequentCount = 0;
         String mostFrequent = null;
 
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            String localMostFrequent = findMostFrequent(table[i]);
+        for (int i = 0; i < BUCKETS_COUNT; ++i) {
+            String localMostFrequent = findMostFrequent(buckets[i]);
             int count = countWord(localMostFrequent);
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
