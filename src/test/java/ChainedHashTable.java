@@ -116,22 +116,6 @@ public class ChainedHashTable {
         return mostFrequent;
     }
 
-    private void sort(String[] words) {
-        // TODO: implement your own (for example bubble sort)
-        Arrays.sort(words);
-    }
-
-    private String[] toSortedArray(DataRecord node) {
-        String[] words = new String[getChainLength(node)];
-        int i = 0;
-        while (node != null) {
-            words[i++] = node.getName();
-            node = node.getNext();
-        }
-        sort(words);
-        return words;
-    }
-
     private String findMostFrequent(DataRecord node) {
         String[] words = toSortedArray(node);
 
@@ -153,5 +137,21 @@ public class ChainedHashTable {
             prev = word;
         }
         return mostFrequent;
+    }
+
+    private void sort(String[] words) {
+        // TODO: implement your own (for example bubble sort)
+        Arrays.sort(words);
+    }
+
+    private String[] toSortedArray(DataRecord node) {
+        String[] words = new String[getChainLength(node)];
+        int i = 0;
+        while (node != null) {
+            words[i++] = node.getName();
+            node = node.getNext();
+        }
+        sort(words);
+        return words;
     }
 }
