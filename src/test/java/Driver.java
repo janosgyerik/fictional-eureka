@@ -25,6 +25,7 @@ public class Driver {
 
         System.out.println("Total word count: " + ctable.size());
         System.out.println("Most frequent word: " + ctable.findMostFrequent());
+        System.out.println("Most frequent word count: " + ctable.countWord(ctable.findMostFrequent()));
     }
 
     private static void printWordCount(ChainedHashTable ctable, String word) {
@@ -40,7 +41,7 @@ public class Driver {
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
         String line;
         while ((line = rd.readLine()) != null) {
-            line = line.trim().replaceAll("[^a-zA-Z0-9 ]", " ")
+            line = line.trim().replaceAll("[^a-zA-Z0-9 ]", "")
                 .toLowerCase()
                 .trim();
             if (line.isEmpty()) {
