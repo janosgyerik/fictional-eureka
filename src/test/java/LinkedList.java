@@ -19,6 +19,22 @@ public class LinkedList {
     private int distinctCount = 0;
     private int wordCount = 0;
 
+    public String getFirst() {
+        return dummy.next.word;
+    }
+
+    public int getWordCount() {
+        return wordCount;
+    }
+
+    public long getDistinctCount() {
+        return distinctCount;
+    }
+
+    public int size() {
+        return distinctCount;
+    }
+
     public void addFirst(String word) {
         Node removed = remove(word);
         if (removed != null) {
@@ -32,8 +48,17 @@ public class LinkedList {
         wordCount++;
     }
 
-    public String getFirst() {
-        return dummy.next.word;
+    private Node remove(String word) {
+        Node node = dummy;
+        while (node.next != null) {
+            if (node.next.word.equals(word)) {
+                Node removed = node.next;
+                node.next = node.next.next;
+                return removed;
+            }
+            node = node.next;
+        }
+        return null;
     }
 
     public int count(String word) {
@@ -45,18 +70,6 @@ public class LinkedList {
             node = node.next;
         }
         return 0;
-    }
-
-    public int getWordCount() {
-        return wordCount;
-    }
-
-    public long getDistinctCount() {
-        return distinctCount;
-    }
-
-    public int size() {
-        return distinctCount;
     }
 
     public String findMostFrequent() {
@@ -73,18 +86,5 @@ public class LinkedList {
             node = node.next;
         }
         return mostFrequent;
-    }
-
-    private Node remove(String word) {
-        Node node = dummy;
-        while (node.next != null) {
-            if (node.next.word.equals(word)) {
-                Node removed = node.next;
-                node.next = node.next.next;
-                return removed;
-            }
-            node = node.next;
-        }
-        return null;
     }
 }
