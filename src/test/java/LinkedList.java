@@ -16,7 +16,7 @@ public class LinkedList {
     // dummy node to mark the head of the list
     private final Node dummy = new Node(null, null);
 
-    private int size = 0;
+    private int distinctCount = 0;
     private int wordCount = 0;
 
     public void addFirst(String word) {
@@ -27,7 +27,7 @@ public class LinkedList {
             dummy.next = removed;
         } else {
             dummy.next = new Node(word, dummy.next);
-            size++;
+            distinctCount++;
         }
         wordCount++;
     }
@@ -52,7 +52,7 @@ public class LinkedList {
     }
 
     public int size() {
-        return size;
+        return distinctCount;
     }
 
     public String findMostFrequent() {
