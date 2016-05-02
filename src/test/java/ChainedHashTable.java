@@ -60,7 +60,7 @@ public class ChainedHashTable {
     public int size() {
         int count = 0;
         for (LinkedList bucket : buckets) {
-            count += bucket.size();
+            count += bucket.getWordCount();
         }
         return count;
     }

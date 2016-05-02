@@ -17,6 +17,7 @@ public class LinkedList {
     private final Node dummy = new Node(null, null);
 
     private int size = 0;
+    private int wordCount = 0;
 
     public void addFirst(String word) {
         Node removed = remove(word);
@@ -26,8 +27,9 @@ public class LinkedList {
             dummy.next = removed;
         } else {
             dummy.next = new Node(word, dummy.next);
+            size++;
         }
-        size++;
+        wordCount++;
     }
 
     public String getFirst() {
@@ -43,6 +45,10 @@ public class LinkedList {
             node = node.next;
         }
         return 0;
+    }
+
+    public int getWordCount() {
+        return wordCount;
     }
 
     public int size() {
