@@ -48,7 +48,7 @@ public class ChainedHashTable {
     public int countDistinctWords() {
         int count = 0;
         for (LinkedList bucket : buckets) {
-            count += bucket.countDistinct();
+            count += bucket.getDistinctCount();
         }
         return count;
     }

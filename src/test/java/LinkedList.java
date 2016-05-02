@@ -51,6 +51,10 @@ public class LinkedList {
         return wordCount;
     }
 
+    public long getDistinctCount() {
+        return distinctCount;
+    }
+
     public int size() {
         return distinctCount;
     }
@@ -69,16 +73,6 @@ public class LinkedList {
             node = node.next;
         }
         return mostFrequent;
-    }
-
-    public long countDistinct() {
-        int count = 0;
-        Node node = dummy.next;
-        while (node != null) {
-            count++;
-            node = node.next;
-        }
-        return count;
     }
 
     private Node remove(String word) {
