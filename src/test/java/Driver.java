@@ -14,26 +14,35 @@ public class Driver {
         printWordCount(ctable, "expostulate");
         printWordCount(ctable, "fangoriously");
 
-        System.out.println("Length of the longest chain: " + ctable.findLongestChainLength());
-        System.out.println("Length of the shortest chain: " + ctable.findShortestChainLength());
-        System.out.println("Distinct words: " + ctable.countDistinctWords());
+        printLine("Longest Chain is", ctable.findLongestChainLength());
+        printLine("Shortest Chain is", ctable.findShortestChainLength());
+        printLine("Total Distinct words", ctable.countDistinctWords());
 
         printFirstWordInBucket(ctable, 0);
         printFirstWordInBucket(ctable, 27);
         printFirstWordInBucket(ctable, 43);
         printFirstWordInBucket(ctable, 126);
 
-        System.out.println("Total word count: " + ctable.size());
-        System.out.println("Most frequent word: " + ctable.findMostFrequent());
-        System.out.println("Most frequent word count: " + ctable.countWord(ctable.findMostFrequent()));
+        printLine("Text contains", ctable.size() + " Total words.");
+        String mostFrequent = ctable.findMostFrequent();
+        printLine("Most frequent words is",
+            String.format("\"%s\", occuring %d times.", mostFrequent, ctable.countWord(mostFrequent)));
+    }
+
+    private static void printLine(String label, int value) {
+        printLine(label, String.valueOf(value));
+    }
+
+    private static void printLine(String label, String value) {
+        System.out.printf("%-27s: %s\n", label, value);
     }
 
     private static void printWordCount(ChainedHashTable ctable, String word) {
-        System.out.printf("The word %s appears %d times in the text.\n", word, ctable.countWord(word));
+        printLine(word + " occurs", ctable.countWord(word) + " times");
     }
 
     private static void printFirstWordInBucket(ChainedHashTable ctable, int index) {
-        System.out.printf("First word of bucket %d is '%s'.\n", index, ctable.getHeadOfBucket(index));
+        printLine("Word at head of bucket " + index, ctable.getHeadOfBucket(index));
     }
 
     ChainedHashTable getChained() throws IOException {
