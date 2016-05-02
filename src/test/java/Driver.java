@@ -50,7 +50,7 @@ public class Driver {
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
         String line;
         while ((line = rd.readLine()) != null) {
-            line = line.trim().replaceAll("[^a-zA-Z0-9 ]", "")
+            line = line.replaceAll("[^a-zA-Z0-9 ]", "")
                 .toLowerCase()
                 .trim();
             if (line.isEmpty()) {
