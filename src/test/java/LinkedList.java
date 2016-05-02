@@ -39,7 +39,7 @@ public class LinkedList {
     public int count(String word) {
         Node node = dummy.next;
         while (node != null) {
-            if (node.word.equalsIgnoreCase(word)) {
+            if (node.word.equals(word)) {
                 return node.count;
             }
             node = node.next;
