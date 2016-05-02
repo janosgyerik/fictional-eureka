@@ -21,17 +21,17 @@ public class ChainedHashTableTest {
 
     @Test
     public void count_of_harker_should_be_175() {
-        assertEquals(175, chainedHashTable.countWord("harker"));
+        assertEquals(113, chainedHashTable.countWord("harker"));
     }
 
     @Test
-    public void count_of_renfield_should_be_48() {
-        assertEquals(48, chainedHashTable.countWord("renfield"));
+    public void count_of_renfield_should_be_39() {
+        assertEquals(39, chainedHashTable.countWord("renfield"));
     }
 
     @Test
-    public void count_of_vampire_should_be_28() {
-        assertEquals(28, chainedHashTable.countWord("vampire"));
+    public void count_of_vampire_should_be_24() {
+        assertEquals(24, chainedHashTable.countWord("vampire"));
     }
 
     @Test
@@ -51,17 +51,17 @@ public class ChainedHashTableTest {
 
     @Test
     public void longest_chain_length_should_be_8751() {
-        assertEquals(8751, chainedHashTable.findLongestChainLength());
+        assertEquals(111, chainedHashTable.findLongestChainLength());
     }
 
     @Test
-    public void shortest_chain_length_should_be_197() {
-        assertEquals(197, chainedHashTable.findShortestChainLength());
+    public void shortest_chain_length_should_be_59() {
+        assertEquals(59, chainedHashTable.findShortestChainLength());
     }
 
     @Test
-    public void distinct_words_should_be_9617() {
-        assertEquals(9617, chainedHashTable.countDistinctWords());
+    public void distinct_words_should_be_10855() {
+        assertEquals(10855, chainedHashTable.countDistinctWords());
     }
 
     @Test
@@ -85,8 +85,8 @@ public class ChainedHashTableTest {
     }
 
     @Test
-    public void size_should_be_166949() {
-        assertEquals(166949, chainedHashTable.size());
+    public void size_should_be_163721() {
+        assertEquals(163721, chainedHashTable.size());
     }
 
     @Test
