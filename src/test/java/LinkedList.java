@@ -3,11 +3,13 @@ public class LinkedList {
     private static class Node {
 
         private final String word;
+        private int count;
         private Node next;
 
         public Node(String word, Node next) {
             this.word = word;
             this.next = next;
+            this.count = 1;
         }
     }
 
@@ -17,7 +19,14 @@ public class LinkedList {
     private int size = 0;
 
     public void addFirst(String word) {
-        dummy.next = new Node(word, dummy.next);
+        Node removed = remove(word);
+        if (removed != null) {
+            removed.count++;
+            removed.next = dummy.next;
+            dummy.next = removed;
+        } else {
+            dummy.next = new Node(word, dummy.next);
+        }
         size++;
     }
 
@@ -26,78 +35,56 @@ public class LinkedList {
     }
 
     public int count(String word) {
-        int count = 0;
         Node node = dummy.next;
         while (node != null) {
             if (node.word.equalsIgnoreCase(word)) {
-                count++;
+                return node.count;
             }
             node = node.next;
         }
-        return count;
+        return 0;
     }
 
     public int size() {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     public String findMostFrequent() {
-        LinkedList copy = copy();
-
         int mostFrequentCount = 0;
         String mostFrequent = null;
 
-        while (!copy.isEmpty()) {
-            String candidate = copy.getFirst();
-            int count = copy.removeAll(candidate);
+        Node node = dummy.next;
+        while (node != null) {
+            int count = node.count;
             if (count > mostFrequentCount) {
                 mostFrequentCount = count;
-                mostFrequent = candidate;
+                mostFrequent = node.word;
             }
+            node = node.next;
         }
         return mostFrequent;
     }
 
     public long countDistinct() {
-        LinkedList copy = copy();
-
         int count = 0;
-        while (!copy.isEmpty()) {
-            copy.removeAll(copy.getFirst());
+        Node node = dummy.next;
+        while (node != null) {
             count++;
+            node = node.next;
         }
         return count;
     }
 
-    private int removeAll(String word) {
-        int count = 0;
+    private Node remove(String word) {
         Node node = dummy;
         while (node.next != null) {
             if (node.next.word.equals(word)) {
+                Node removed = node.next;
                 node.next = node.next.next;
-                size--;
-                count++;
-            } else {
-                node = node.next;
+                return removed;
             }
-        }
-        return count;
-    }
-
-    private LinkedList copy() {
-        LinkedList copy = new LinkedList();
-        Node node = dummy.next;
-        Node last = copy.dummy;
-        while (node != null) {
-            last.next = new Node(node.word, null);
-            last = last.next;
             node = node.next;
         }
-        copy.size = size;
-        return copy;
+        return null;
     }
 }
