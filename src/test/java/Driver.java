@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 
 public class Driver {
 
@@ -50,9 +51,10 @@ public class Driver {
         BufferedReader rd = new BufferedReader(new FileReader("pg345.txt"));
         String line;
         while ((line = rd.readLine()) != null) {
-            line = line.replaceAll("[^a-zA-Z0-9 ]", "")
-                .toLowerCase()
-                .trim();
+            line = line
+                .replaceAll("[^a-zA-Z0-9 ]", "")
+                .trim()
+                .toLowerCase(Locale.ROOT);
             if (line.isEmpty()) {
                 continue;
             }
