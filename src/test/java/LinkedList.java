@@ -36,11 +36,9 @@ public class LinkedList {
     }
 
     public void addFirst(String word) {
-        Node removed = remove(word);
-        if (removed != null) {
-            removed.count++;
-            removed.next = dummy.next;
-            dummy.next = removed;
+        Node node = find(word);
+        if (node != null) {
+            node.count++;
         } else {
             dummy.next = new Node(word, dummy.next);
             distinctCount++;
@@ -48,13 +46,11 @@ public class LinkedList {
         wordCount++;
     }
 
-    private Node remove(String word) {
-        Node node = dummy;
-        while (node.next != null) {
-            if (node.next.word.equals(word)) {
-                Node removed = node.next;
-                node.next = node.next.next;
-                return removed;
+    private Node find(String word) {
+        Node node = dummy.next;
+        while (node != null) {
+            if (node.word.equals(word)) {
+                return node;
             }
             node = node.next;
         }

@@ -65,23 +65,23 @@ public class ChainedHashTableTest {
     }
 
     @Test
-    public void head_of_chain_0_is_donate() {
-        assertEquals("donate", chainedHashTable.getHeadOfBucket(0));
+    public void head_of_chain_0_is_revenue() {
+        assertEquals("revenue", chainedHashTable.getHeadOfBucket(0));
     }
 
     @Test
-    public void head_of_chain_27_is_could() {
-        assertEquals("could", chainedHashTable.getHeadOfBucket(27));
+    public void head_of_chain_27_is_transcription() {
+        assertEquals("transcription", chainedHashTable.getHeadOfBucket(27));
     }
 
     @Test
-    public void head_of_chain_43_is_necessarily() {
-        assertEquals("necessarily", chainedHashTable.getHeadOfBucket(43));
+    public void head_of_chain_43_is_3458zip() {
+        assertEquals("3458zip", chainedHashTable.getHeadOfBucket(43));
     }
 
     @Test
-    public void head_of_chain_126_is_please() {
-        assertEquals("please", chainedHashTable.getHeadOfBucket(126));
+    public void head_of_chain_126_is_5961887() {
+        assertEquals("5961887", chainedHashTable.getHeadOfBucket(126));
     }
 
     @Test
