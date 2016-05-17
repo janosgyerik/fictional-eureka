@@ -138,48 +138,44 @@ quick_sort: #Function to perform the quicksort algorithm
 #        }
 #        return;
 #    }
+
+# $t1 <- pivot
 move $t0, $a2  # index = right
 add $t0, $t0, $t0  # double the index
 add $t0, $t0, $t0  # double the index
 add $t0, $a0, $t0  # $t0 = arr + right * 4 = &arr[right]
 lw $t1, 0($t0)  # pivot = *$t0 = arr[right]
-move $t7, $t0   # $t7 = arr + right * 4 = &arr[right]
+# $t7 <- &arr[right]
+move $t7, $t0
 
-li $t3, 0
-add $t3, $t3, $a1  # wall = left
+# $t2 <- &arr[wall]
+move $t0, $a1  # index = left
+add $t0, $t0, $t0  # double the index
+add $t0, $t0, $t0  # double the index
+add $t2, $a0, $t0  # $t2 = arr + left * 4 = &arr[left]
 
-move $t4, $a1  # i = left
+# $t3 <- &arr[i]
+move $t3, $t2
+
 loop:
-    move $t0, $t4  # $t0 = i
-    add $t0, $t0, $t0
-    add $t0, $t0, $t0
-    add $t8, $a0, $t0  # arr + i * 4
-    lw $t6, 0($t8)  # arr[i]
+    # $t4 <- arr[i]
+    lw $t4, 0($t3)  
+    slt $t0, $t1, $t4             # set if pivot < arr[i]
+    beq $t0, 1, increment_loop    # pivot < arr[i]
+    beq $t1, $t4, increment_loop  # pivot == arr[i]
 
-    slt $t0, $t1, $t6  # set if pivot < arr[i]
-    beq $t0, 1, increment_loop
-    beq $t1, $t6, increment_loop
-    # arr[i] < pivot
+    beq $t2, $t3, increment_wall  # if wall == i
 
-    beq $t3, $t4, increment_wall  # if wall == i
-    # wall != i
-
-    move $t0, $t3  # $t0 = wall
-    add $t0, $t0, $t0
-    add $t0, $t0, $t0
-    add $t0, $a0, $t0  # arr + i * 4
-    lw $t9, 0($t0)  # arr[wall]
-
-    move $t5, $t6  # temp = arr[i]
-    sw $t9, 0($t8)  # arr[i] = arr[wall]
-    sw $t5, 0($t0)  # arr[wall] = temp
+    lw $t0, 0($t2)  # temp = arr[wall]
+    sw $t4, 0($t2)  # arr[wall] = arr[i]
+    sw $t0, 0($t3)  # arr[i] = temp
 
     increment_wall:
-    addi $t3, $t3, 1
+    addi $t2, $t2, 4
 
     increment_loop:
-    addi $t4, $t4, 1  # increment i
-    bne $t4, $a2, loop
+    addi $t3, $t3, 4  # increment i
+    bne $t3, $t7, loop
 
 #    int pivot = arr[right];
 #    int wall = left;
@@ -194,14 +190,9 @@ loop:
 #        }
 #    }
 #
-move $t0, $t3  # $t0 = wall
-add $t0, $t0, $t0
-add $t0, $t0, $t0
-add $t0, $a0, $t0  # arr + i * 4
-lw $t3, 0($t0)  # arr[wall]
-
-sw $t3, 0($t7)  # arr[right] = arr[wall]
-sw $t1, 0($t0)  # arr[wall] = pivot
+lw $t0, 0($t2)  # temp = arr[wall]
+sw $t1, 0($t2)  # arr[wall] = pivot
+sw $t0, 0($t7)  # arr[right] = arr[wall]
 
 #    quicksort(arr, left, wall - 1);
 #    quicksort(arr, wall + 1, right);
