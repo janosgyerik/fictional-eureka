@@ -138,11 +138,11 @@ quick_sort: #Function to perform the quicksort algorithm
 #        }
 #        return;
 #    }
-move $t0, $a2  # pivot = right
+move $t0, $a2  # index = right
 add $t0, $t0, $t0  # double the index
 add $t0, $t0, $t0  # double the index
-add $t0, $a0, $t0  # $t1 = arr + pivot
-lw $t2, 0($t0)  # pivot = arr[right]
+add $t0, $a0, $t0  # index = arr + pivot
+lw $t1, 0($t0)  # pivot = arr[right]
 
 li $t3, 0
 add $t3, $t3, $a1  # wall = left
@@ -155,9 +155,9 @@ loop:
     add $t8, $a0, $t0  # arr + i * 4
     lw $t6, 0($t8)  # arr[i]
 
-    slt $t0, $t2, $t6  # set if pivot < arr[i]
+    slt $t0, $t1, $t6  # set if pivot < arr[i]
     beq $t0, 1, increment_loop
-    beq $t2, $t6, increment_loop
+    beq $t1, $t6, increment_loop
     # arr[i] < pivot
 
     beq $t3, $t4, increment_wall  # if wall == i
@@ -199,13 +199,13 @@ add $t0, $t0, $t0
 add $t0, $a0, $t0  # arr + i * 4
 lw $t3, 0($t0)  # arr[wall]
 
-move $t1, $a2  # $t1 = right
-add $t1, $t1, $t1  # double the index
-add $t1, $t1, $t1  # double the index
-add $t1, $a0, $t1  # $t1 = arr + right
+move $t2, $a2  # $t2 = right
+add $t2, $t2, $t2  # double the index
+add $t2, $t2, $t2  # double the index
+add $t2, $a0, $t2  # $t1 = arr + right
 
-sw $t3, 0($t1)  # arr[right] = arr[wall]
-sw $t2, 0($t0)  # arr[wall] = pivot
+sw $t3, 0($t2)  # arr[right] = arr[wall]
+sw $t1, 0($t0)  # arr[wall] = pivot
 
 #    quicksort(arr, left, wall - 1);
 #    quicksort(arr, wall + 1, right);
