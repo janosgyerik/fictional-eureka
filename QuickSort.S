@@ -177,19 +177,6 @@ loop:
     addi $t3, $t3, 4  # increment i
     bne $t3, $t7, loop
 
-#    int pivot = arr[right];
-#    int wall = left;
-#    for (int i = left; i < right; i++) {
-#        if (arr[i] < pivot) {
-#            if (wall != i) {
-#                temp = arr[i];
-#                arr[i] = arr[wall];
-#                arr[wall] = temp;
-#            }
-#            wall++;
-#        }
-#    }
-#
 lw $t0, 0($t2)  # temp = arr[wall]
 sw $t1, 0($t2)  # arr[wall] = pivot
 sw $t0, 0($t7)  # arr[right] = arr[wall]
