@@ -125,11 +125,26 @@ quick_sort: #Function to perform the quicksort algorithm
 # $a1 = left bound
 # $a2 = right bound
 
-#    int size = right - left;
-#    int temp;
-#    if (size < 1) {
-#        return;
-#    }
+# push $ra, $s0, $s1, $s2 onto stack
+sw $ra, 0($sp)
+addi $sp, $sp, -4
+sw $s0, 0($sp)
+addi $sp, $sp, -4
+sw $s1, 0($sp)
+addi $sp, $sp, -4
+sw $s2, 0($sp)
+addi $sp, $sp, -4
+
+move $s0, $a0 # $s0 = memory address of the array
+move $s1, $a1 # $s1 = left
+move $s2, $a2 # $s2 = right
+
+move $t1, $s2      # C code: int size = right
+sub $t1, $t1, $s1  # C code: size -= left;
+slti $t0, $t1, 1
+beq $t0, 1, end_quick_sort  # C code: if (size < 1) return;
+
+# TODO
 #    if (size == 1) {
 #        if (arr[right] < arr[left]) {
 #            temp = arr[right];
@@ -140,19 +155,21 @@ quick_sort: #Function to perform the quicksort algorithm
 #    }
 
 # $t1 <- pivot
-move $t0, $a2  # index = right
+move $t0, $s2  # index = right
 add $t0, $t0, $t0  # double the index
 add $t0, $t0, $t0  # double the index
-add $t0, $a0, $t0  # $t0 = arr + right * 4 = &arr[right]
+add $t0, $s0, $t0  # $t0 = arr + right * 4 = &arr[right]
 lw $t1, 0($t0)  # pivot = *$t0 = arr[right]
 # $t7 <- &arr[right]
 move $t7, $t0
 
 # $t2 <- &arr[wall]
-move $t0, $a1  # index = left
+move $t0, $s1  # index = left
 add $t0, $t0, $t0  # double the index
 add $t0, $t0, $t0  # double the index
-add $t2, $a0, $t0  # $t2 = arr + left * 4 = &arr[left]
+add $t2, $s0, $t0  # $t2 = arr + left * 4 = &arr[left]
+# $t6 <- wall
+move $t6, $s1
 
 # $t3 <- &arr[i]
 move $t3, $t2
@@ -172,6 +189,7 @@ loop:
 
     increment_wall:
     addi $t2, $t2, 4
+    addi $t6, $t6, 1
 
     increment_loop:
     addi $t3, $t3, 4  # increment i
@@ -182,6 +200,33 @@ sw $t1, 0($t2)  # arr[wall] = pivot
 sw $t0, 0($t7)  # arr[right] = arr[wall]
 
 #    quicksort(arr, left, wall - 1);
+move $a0, $s0
+move $a1, $s1
+move $t0, $s2
+addi $a2, $t6, -1
+jal quick_sort
+
 #    quicksort(arr, wall + 1, right);
+move $a0, $s0
+move $a2, $s2
+move $t2, $t0
+addi $a1, $t6, 1
+jal quick_sort
+
+end_quick_sort:
+
+# pop $s0 and $s1 from the stack
+
+addi $sp, $sp, 4
+lw $s2, 0($sp)
+
+addi $sp, $sp, 4
+lw $s1, 0($sp)
+
+addi $sp, $sp, 4
+lw $s0, 0($sp)
+
+addi $sp, $sp, 4
+lw $ra, 0($sp)
 
 jr $ra
