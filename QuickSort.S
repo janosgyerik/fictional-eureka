@@ -144,15 +144,38 @@ sub $t1, $t1, $s1  # C code: size -= left;
 slti $t0, $t1, 1
 beq $t0, 1, cleanup_quick_sort  # C code: if (size < 1) return;
 
-# TODO
-#    if (size == 1) {
-#        if (arr[right] < arr[left]) {
-#            temp = arr[right];
-#            arr[right] = arr[left];
-#            arr[left] = temp;
-#        }
-#        return;
-#    }
+# UNNECESSARY_BLOCK_START
+# you can delete this block without breaking the algorithm
+#
+bne $t1, 1, continue_quick_sort  # C code: if (size != 1) ...
+
+# load address of arr[left] into $t1
+move $t1, $s1      # C code: int index = left
+add $t1, $t1, $t1  # C code: index += index  // double it
+add $t1, $t1, $t1  # C code: index += index  // double it again
+add $t1, $s0, $t1  # C code: index = arr + index
+
+# load address of arr[right] into $t2
+move $t2, $s2      # C code: int index = right
+add $t2, $t2, $t2  # C code: index += index  // double it
+add $t2, $t2, $t2  # C code: index += index  // double it again
+add $t2, $s0, $t2  # C code: index = arr + index
+
+# load the values
+lw $t3, 0($t1)  # $t3 = arr[left]
+lw $t4, 0($t2)  # $t4 = arr[right]
+
+slt $t0, $t4, $t3  # if (!(arr[right] < arr[left])) cleanup
+bne $t0, 1, cleanup_quick_sort
+
+# swap the values
+sw $t4, 0($t1)  # arr[left]  = $t4
+sw $t3, 0($t2)  # arr[right] = $t3
+
+j cleanup_quick_sort
+
+continue_quick_sort:
+# UNNECESSARY_BLOCK_END
 
 # save pivot in $t1
 move $t0, $s2      # C code: int index = right
