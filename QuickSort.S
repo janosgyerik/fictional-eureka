@@ -154,20 +154,21 @@ beq $t0, 1, end_quick_sort  # C code: if (size < 1) return;
 #        return;
 #    }
 
-# $t1 <- pivot
-move $t0, $s2  # index = right
-add $t0, $t0, $t0  # double the index
-add $t0, $t0, $t0  # double the index
-add $t0, $s0, $t0  # $t0 = arr + right * 4 = &arr[right]
-lw $t1, 0($t0)  # pivot = *$t0 = arr[right]
-# $t7 <- &arr[right]
+# save pivot in $t1
+move $t0, $s2      # C code: int index = right
+add $t0, $t0, $t0  # C code: index += index  // double it
+add $t0, $t0, $t0  # C code: index += index  // double it again
+add $t0, $s0, $t0  # C code: index = arr + index
+lw $t1, 0($t0)     # $t1 = arr[right]
+# save the address of arr[right] in $t7
 move $t7, $t0
 
-# $t2 <- &arr[wall]
-move $t0, $s1  # index = left
-add $t0, $t0, $t0  # double the index
-add $t0, $t0, $t0  # double the index
-add $t2, $s0, $t0  # $t2 = arr + left * 4 = &arr[left]
+# save the address of arr[left] in $t2
+move $t0, $s1      # C code: int index = left
+add $t0, $t0, $t0  # C code: index += index  // double it
+add $t0, $t0, $t0  # C code: index += index  // double it again
+add $t0, $s0, $t0  # C code: index = arr + index
+move $t2, $t0      # $t2 = arr[left]
 # $t6 <- wall
 move $t6, $s1
 
@@ -215,17 +216,14 @@ jal quick_sort
 
 end_quick_sort:
 
-# pop $s0 and $s1 from the stack
+# pop $s0, $s1, $s2, $ra from the stack
 
 addi $sp, $sp, 4
 lw $s2, 0($sp)
-
 addi $sp, $sp, 4
 lw $s1, 0($sp)
-
 addi $sp, $sp, 4
 lw $s0, 0($sp)
-
 addi $sp, $sp, 4
 lw $ra, 0($sp)
 
