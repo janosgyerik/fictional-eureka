@@ -206,9 +206,8 @@ move $t6, $s1  # C code: int wall = left
 loop:
     # load the value of arr[i] into $t4
     lw $t4, 0($t3)  
-    slt $t0, $t1, $t4             # set $t0 to 1 if pivot < arr[i]
-    beq $t0, 1, increment_loop    # if (pivot  < arr[i]) increment_loop
-    beq $t1, $t4, increment_loop  # if (pivot == arr[i]) increment_loop
+    slt $t0, $t4, $t1             # set $t0 to 1 if arr[i] < pivot
+    bne $t0, 1, increment_loop    # if (!(arr[i] < pivot)) increment_loop
 
     beq $t2, $t3, increment_wall  # if (pwall == pi) increment_wall
 
