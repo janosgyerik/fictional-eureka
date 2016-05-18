@@ -142,7 +142,7 @@ move $s2, $a2 # $s2 = right
 move $t1, $s2      # C code: int size = right
 sub $t1, $t1, $s1  # C code: size -= left;
 slti $t0, $t1, 1
-beq $t0, 1, end_quick_sort  # C code: if (size < 1) return;
+beq $t0, 1, cleanup_quick_sort  # C code: if (size < 1) return;
 
 # TODO
 #    if (size == 1) {
@@ -169,52 +169,58 @@ add $t0, $t0, $t0  # C code: index += index  // double it
 add $t0, $t0, $t0  # C code: index += index  // double it again
 add $t0, $s0, $t0  # C code: index = arr + index
 move $t2, $t0      # $t2 = arr[left]
-# $t6 <- wall
-move $t6, $s1
 
-# $t3 <- &arr[i]
-move $t3, $t2
+# save the address of arr[left] in $t3 (too)
+move $t3, $t2  # C code: int* pi = &arr[left]
+
+# that is:
+# $t2 = &arr[left] = pi
+# $t3 = &arr[wall] = pwall
+
+# save the value of left in $t6
+move $t6, $s1  # C code: int wall = left
 
 loop:
-    # $t4 <- arr[i]
+    # load the value of arr[i] into $t4
     lw $t4, 0($t3)  
-    slt $t0, $t1, $t4             # set if pivot < arr[i]
-    beq $t0, 1, increment_loop    # pivot < arr[i]
-    beq $t1, $t4, increment_loop  # pivot == arr[i]
+    slt $t0, $t1, $t4             # set $t0 to 1 if pivot < arr[i]
+    beq $t0, 1, increment_loop    # if (pivot  < arr[i]) increment_loop
+    beq $t1, $t4, increment_loop  # if (pivot == arr[i]) increment_loop
 
-    beq $t2, $t3, increment_wall  # if wall == i
+    beq $t2, $t3, increment_wall  # if (pwall == pi) increment_wall
 
-    lw $t0, 0($t2)  # temp = arr[wall]
-    sw $t4, 0($t2)  # arr[wall] = arr[i]
-    sw $t0, 0($t3)  # arr[i] = temp
+    # swap the value of arr[wall] and arr[i]
+    lw $t0, 0($t2)  # C code: temp = arr[wall]
+    sw $t4, 0($t2)  # C code: arr[wall] = arr[i]
+    sw $t0, 0($t3)  # C code: arr[i] = temp
 
     increment_wall:
-    addi $t2, $t2, 4
-    addi $t6, $t6, 1
+    addi $t2, $t2, 4  # C code: pwall += 1
+    addi $t6, $t6, 1  # C code:     i += 1
 
     increment_loop:
-    addi $t3, $t3, 4  # increment i
-    bne $t3, $t7, loop
+    addi $t3, $t3, 4  # C code:    pi += 1
+    bne $t3, $t7, loop  # if (pi != pright) continue loop
 
-lw $t0, 0($t2)  # temp = arr[wall]
-sw $t1, 0($t2)  # arr[wall] = pivot
-sw $t0, 0($t7)  # arr[right] = arr[wall]
+lw $t0, 0($t2)  # C code: temp = arr[wall]
+sw $t1, 0($t2)  # C code: arr[wall] = pivot
+sw $t0, 0($t7)  # C code: arr[right] = arr[wall]
 
-#    quicksort(arr, left, wall - 1);
+# prepare parameters to call quicksort(arr, left, wall - 1);
 move $a0, $s0
 move $a1, $s1
 move $t0, $s2
 addi $a2, $t6, -1
 jal quick_sort
 
-#    quicksort(arr, wall + 1, right);
+# prepare parameters to call quicksort(arr, wall + 1, right);
 move $a0, $s0
 move $a2, $s2
 move $t2, $t0
 addi $a1, $t6, 1
 jal quick_sort
 
-end_quick_sort:
+cleanup_quick_sort:
 
 # pop $s0, $s1, $s2, $ra from the stack
 
